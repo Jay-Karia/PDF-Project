@@ -1,0 +1,1174 @@
+{
+  "status": 200,
+  "response": {
+    "pk": 15048742,
+    "uuid": "aaf95929-7194-4100-bfdb-0379534b038f",
+    "name": "00_tax_docs",
+    "created": "2021-11-22T15:55:18Z",
+    "created_ts": "2021-11-22T15:55:18Z",
+    "verified_pages_count": 4,
+    "book_status": "ACTIVE",
+    "id": 15048742,
+    "forms": [
+      {
+        "pk": 32348918,
+        "uuid": "eb703ebc-f2e0-4f91-81e0-56b30516c15c",
+        "form_type": "A_1099_MISC",
+        "raw_fields": {
+          "a_1099_misc-Part1-PayerPii:payerName": {
+            "value": "CHARLIE'S BROWNIES",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part3-Boxes(1-8):1-Rents": {
+            "value": "24000.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:taxFormYear": {
+            "value": "2019",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part3-Boxes(1-8):2-Royalties": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:2ndTinNot.": {
+            "value": "NOT CHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part3-Boxes(1-8):3-OtherIncome": {
+            "value": "3687.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:payerAddress:zip": {
+            "value": "94102",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:payerAddress:city": {
+            "value": "SAN FRANCISCO",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:payerTelephoneNo.": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:accountNumber": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:recipientName": {
+            "value": "VERONICA JUPPS",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:payerAddress:state": {
+            "value": "CA",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):18a-StateIncome": {
+            "value": "23450.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:payerAddress:country": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part3-Boxes(1-8):5-FishingBoatProceeds": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):16a-StateTaxWithheld": {
+            "value": "96.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:recipientAddress:zip": {
+            "value": "94518",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):15b-Section409AIncome": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:payerAddress:addressLine1": {
+            "value": "210 IMPERIAL ST.",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:payerAddress:addressLine2": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:recipientAddress:city": {
+            "value": "WALNUT CREEK",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):18b-StateIncome(Lower)": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:fatcaFilingRequirement": {
+            "value": "NOT CHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:recipientAddress:state": {
+            "value": "CA",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):17a-State/PayerStateNo.": {
+            "value": "12",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part3-Boxes(1-8):7-NonemployeeCompensation": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):10-CropInsuranceProceeds": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):15a-Section409ADeferrals": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:recipientAddress:country": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part3-Boxes(1-8):4-FederalIncomeTaxWithheld": {
+            "value": "235.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):16b-StateTaxWithheld(Lower)": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part3-Boxes(1-8):6-MedicalAndHealthCarePayments": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:recipientAddress:addressLine1": {
+            "value": "566 RAYON AVENUE",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:recipientAddress:addressLine2": {
+            "value": "APT. 12",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):17b-State/PayerStateNo.(Lower)": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):13-ExcessGoldenParachutePayments": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):14-GrossProceedsPaidToAnAttorney": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part1-PayerPii:payerTin(FederalIdentificationNumber)": {
+            "value": "27-6579021",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part2-RecipientPii:recipientTin(IdentificationNumber)": {
+            "value": "800-70-8877",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part3-Boxes(1-8):8-SubstitutePaymentsInLieuOfDividendsOrInterest": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          },
+          "a_1099_misc-Part4-Boxes(9-18):9-PayerMadeDirectSalesOf$5000OrMoreOfConsumerProductsToABuyer(Recipient)ForResale": {
+            "value": "NOT CHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "2019 1099-MISC.pdf"
+          }
+        },
+        "form_config_pk": 11402,
+        "tables": []
+      },
+      {
+        "pk": 32348859,
+        "uuid": "3856a49f-0c3b-40e2-b21a-b6482914303d",
+        "form_type": "A_1040_SCHEDULE_C_2020",
+        "raw_fields": {
+          "a_1040_schedule_c_2020-General:year": {
+            "value": "2020",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:c-BusinessName": {
+            "value": "ABC CONSULTING",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:nameOfProprietor": {
+            "value": "JOHN DOE",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:f-AccountingMethod": {
+            "value": "1 - CASH",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part1-Income:line1-CheckBox": {
+            "value": "CHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:e-BusinessAddress:zip": {
+            "value": "10006",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:e-BusinessAddress:city": {
+            "value": "NEW YORK",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part1-Income:line5-GrossProfit": {
+            "value": "130672.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part1-Income:line7-GrossIncome": {
+            "value": "130672.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line22-Supplies": {
+            "value": "1378.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:d-EmployerIdNumber(Ein)": {
+            "value": "12-6587423",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:e-BusinessAddress:state": {
+            "value": "NY",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line12-Depletion": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line25-Utilities": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line8-Advertising": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:socialSecurityNumber(Ssn)": {
+            "value": "650-30-4150",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part1-Income:line4-CostOfGoodsSold": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:b-EnterCodeFromInstructions": {
+            "value": "521301",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line11-ContractLabor": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line18-OfficeExpense": {
+            "value": "150.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line28-TotalExpenses": {
+            "value": "98154.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line27A-OtherExpenses": {
+            "value": "32290.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line16B-Interest-Other": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:e-BusinessAddress:addressLine1": {
+            "value": "101 GREENWICH STREET",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:e-BusinessAddress:addressLine2": {
+            "value": "FLOOR 23",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line23-TaxesAndLicenses": {
+            "value": "1155.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part1-Income:line1-GrossReceiptsOrSales": {
+            "value": "130672.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part1-Income:line2-ReturnsAndAllowances": {
+            "value": "0.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line31-NetProfitOr(Loss)": {
+            "value": "32518.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line10-CommissionsAndFees": {
+            "value": "36631.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line9-CarAndTruckExpenses": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part1-Income:line3-SubtractLine2FromLine1": {
+            "value": "130672.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:f-AccountingMethod(SpecifyIfOther)": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line21-RepairsAndMaintenance": {
+            "value": "6567.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line27B-ReservedForFutureUse": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line24A-TravelAndMeals-Travel": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line14-EmployeeBenefitPrograms": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line29-TentativeProfitOr(Loss)": {
+            "value": "32518.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line15-Insurance(OtherThanHealth)": {
+            "value": "6504.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line17-LegalAndProfessionalServices": {
+            "value": "350.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line26-Wages(LessEmploymentCredits)": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line19-PensionAndProfit-SharingPlans": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line30A-TotalSquareFootageOfYourHome": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:j-IfYesDidYouOrWillYouFileRequiredForms1099?": {
+            "value": "NO",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line24B-TravelAndMeals-DeductibleMeals": {
+            "value": "1289.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line32A-CheckBox-AllInvestmentIsAtRisk": {
+            "value": "NOT CHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line30-ExpensesForBusinessUseOfYourHome": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part1-Income:line6-OtherIncome-IncludingFederalAndState": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line16A-Interest-Mortgage(PaidToBanksEtc)": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line20B-RentOrLease-OtherBusinessProperty": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line32B-CheckBox-SomeInvestmentIsNotAtRisk": {
+            "value": "NOT CHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line13-DepreciationAndSection179ExpenseDeduction": {
+            "value": "11840.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:a-PrincipalBusinessOrProfessionIncludingProductOrService": {
+            "value": "MANAGEMENT CONSULTING SERVICES",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line20A-RentOrLease-VehiclesMachineryAndEquipment": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:h-IfYouStartedOrAcquiredThisBusinessDuringThisYearCheckHere": {
+            "value": "NOT CHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part2-Expenses:line30B-TotalSquareFootageOfThePartOfYourHomeUsedForBusiness": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:i-DidYouMakeAnyPaymentsInThisYearThatWouldRequireYouToFileForm(S)1099?": {
+            "value": "NO",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-General:g-DidYouMateriallyParticipateInTheOperationOfThisBusinessDuringThisYear?": {
+            "value": "YES",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line39-OtherCosts": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line37-CostOfLabor": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses1-Amount": {
+            "value": "11658.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses2-Amount": {
+            "value": "13578.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses3-Amount": {
+            "value": "892.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses4-Amount": {
+            "value": "1220.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses5-Amount": {
+            "value": "1820.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses6-Amount": {
+            "value": "1419.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses7-Amount": {
+            "value": "1678.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses8-Amount": {
+            "value": "25.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses9-Amount": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line42-CostOfGoodsSold": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part4-InformationOnYourVehicle:line44C-Other": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:line48-TotalOtherExpenses": {
+            "value": "32290.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses1-Description": {
+            "value": "UTILITY BILLS",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses2-Description": {
+            "value": "PROFESSIONAL SERVICES",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses3-Description": {
+            "value": "LAWYER FEES",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses4-Description": {
+            "value": "CELL PHONE",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses5-Description": {
+            "value": "SALES TAX",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses6-Description": {
+            "value": "TRAVEL EXPENSES",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses7-Description": {
+            "value": "RENT",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses8-Description": {
+            "value": "OTHER EXPENSES",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part5-OtherExpenses:otherExpenses9-Description": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part4-InformationOnYourVehicle:line44A-Business": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line40-AddLines35Through39": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part4-InformationOnYourVehicle:line44B-Commuting": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line38-MaterialsAndSupplies": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line41-InventoryAtEndOfYear": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line35-InventoryAtBegininngOfYear": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line33-Method(S)UsedToValueClosingInventory": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part4-InformationOnYourVehicle:line47B-IfYesIsTheEvidenceWritten?": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line36-PurchasesLessCostOfItemsWithdrawnForPersonalUse": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part4-InformationOnYourVehicle:line47A-DoYouHaveEvidenceToSupportYourDeduction?": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part4-InformationOnYourVehicle:line43-WhenDidYouPlaceYourVehicleInServiceForBusinessPurposes?": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part4-InformationOnYourVehicle:line45-WasYourVehicleAvailableForPersonalUseDuringOff-DutyHours?": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part4-InformationOnYourVehicle:line46-DoYou(OrYourSpouse)HaveAnotherVehicleAvailableForPersonalUse?": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          },
+          "a_1040_schedule_c_2020-Part3-CostOfGoodsSold:line34-WasThereAnyChangeInDeterminingQuantitiesCostsOrValuationsBetweenOpeningAndClosingInventory?": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "Sample 1040 Schedule_C 2020.pdf"
+          }
+        },
+        "form_config_pk": 26588,
+        "tables": []
+      },
+      {
+        "pk": 32348776,
+        "uuid": "708aacd7-20e0-45c7-a74c-c38c6c3d9464",
+        "form_type": "W2",
+        "raw_fields": {
+          "box9": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "year": {
+            "value": "2018",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box12aCode": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box12bCode": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box12cCode": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box12dcode": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box14Other": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box12aAmount": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box12bAmount": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box12cAmount": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "box12dAmount": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employeeName": {
+            "value": "SAMUEL E MOSER",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerIdNo": {
+            "value": "54-1876742",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerName": {
+            "value": "TJS SAFETY TRAINING & STAFFING",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "statePrimary": {
+            "value": "VA",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "allocatedTips": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "qualifiedPlans": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "retirementPlan": {
+            "value": "UNCHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "stateSecondary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "statutoryEmployee": {
+            "value": "UNCHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employeeAddressZip": {
+            "value": "23901",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerAddressZip": {
+            "value": "23901",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "socialSecurityTips": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "third-PartySickPay": {
+            "value": "UNCHECKED",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "wagesTipsOtherComp": {
+            "value": "2886.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf",
+            "validation_error": "Box 1 should be greater than 233.58 and less than 393051.55. User should verify document."
+          },
+          "employeeAddressCity": {
+            "value": "FARMVILE",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerAddressCity": {
+            "value": "FARMVILLE",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "localityNamePrimary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "medicareTaxWithheld": {
+            "value": "41.85",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "socialSecurityWages": {
+            "value": "2886.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employeeAddressLine1": {
+            "value": "72 PENNY LANE",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employeeAddressLine2": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employeeAddressState": {
+            "value": "VA",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerAddressLine1": {
+            "value": "1102 SOUTH MAIN STREET",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerAddressLine2": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerAddressState": {
+            "value": "VA",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "medicareWagesAndTips": {
+            "value": "2886.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "dependentCareBenefits": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "localIncomeTaxPrimary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "localWagesTipsPrimary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "localityNameSecondary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "stateIncomeTaxPrimary": {
+            "value": "98.75",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "stateWagesTipsPrimary": {
+            "value": "2886.00",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "localIncomeTaxSecondary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "localWagesTipsSecondary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "stateIncomeTaxSecondary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "stateWagesTipsSecondary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "federalIncomeTaxWithheld": {
+            "value": "184.33",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf",
+            "validation_error": "Box 2 should be greater than 10.08% of Box 1 and less than 26.71% of Box 1. User should verify document."
+          },
+          "socialSecurityTaxWithheld": {
+            "value": "178.93",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employeeSocialSecurityNumber": {
+            "value": "220-49-9149",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerStateIdNumberPrimary": {
+            "value": "30-541876742F - 001",
+            "is_empty": false,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          },
+          "employerStateIdNumberSecondary": {
+            "value": "",
+            "is_empty": true,
+            "alias_used": null,
+            "source_filename": "W-2's.pdf"
+          }
+        },
+        "form_config_pk": 28117,
+        "tables": []
+      }
+    ],
+    "book_is_complete": true
+  },
+  "message": "OK"
+}
