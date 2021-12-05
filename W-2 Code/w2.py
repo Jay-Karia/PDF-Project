@@ -38,8 +38,3 @@ employeeAddressZip = data['response']['forms'][2]['raw_fields']['employeeAddress
 box14Other = data['response']['forms'][2]['raw_fields']['box14Other']['value']
 year = data['response']['forms'][2]['raw_fields']['year']['value']
 # Done :up
-
-# Writing into a new pdf file
-with open('test.pdf', 'w') as pdf_file:
-    reader = PyPDF2.PdfFileReader(pdf_file)
-    writer = PyPDF2.PdfFileWriter()
