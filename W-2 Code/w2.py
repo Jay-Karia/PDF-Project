@@ -1,17 +1,11 @@
+from fillpdf import fillpdfs
 import json
-import PyPDF2
-from PyPDF2.generic import BooleanObject, NameObject, IndirectObject
 
-# Taking all the data required
 with open('W-2 Code/form_field_mapping.json') as json_file:
     data = json.load(json_file)
 
 employeeSocialSecurity = data['response']['forms'][2]['raw_fields']['employeeSocialSecurityNumber']['value']
 employerIdNo = data['response']['forms'][2]['raw_fields']['employerIdNo']['value']
-# Done :up
-
-from fillpdf import fillpdfs
-import fillpdf
 
 fillpdfs.get_form_fields('Templates/W-2/IRS Form W-2_Blank.pdf')
 dict_ = {
