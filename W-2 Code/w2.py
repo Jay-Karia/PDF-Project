@@ -1,4 +1,4 @@
-from fillpdf import fillpdfs
+from PyPDF2 import PdfFileWriter, PdfFileReader
 import json
 import os
 
@@ -45,20 +45,14 @@ employeeInfo = f'{employeeName}{employeeAddressLine1}{employeeAddressLine2}{empl
 # -----
 year = data['response']['forms'][2]['raw_fields']['year']['value']
 
-fillpdfs.get_form_fields('a.pdf')
+reader = PdfFileReader('a.pdf')
+forms = reader.getFormTextFields()
+
 dict_ = {
-    'þÿ\x00f\x001\x00_\x001\x00[\x000\x00]': employeeSocialSecurity,
-    'þÿ\x00f\x001\x00_\x003\x00[\x000\x00]': employerIdNo,
-    'þÿ\x00f\x001\x00_\x006\x00[\x000\x00]': employeeName,
-    'þÿ\x00f\x001\x00_\x007\x00[\x000\x00]': employeeLastName,
-    'þÿ\x00f\x001\x00_\x001\x000\x00[\x000\x00]': wagesTipsOtherComp,
-    'þÿ\x00f\x001\x00_\x001\x001\x00[\x000\x00]': federalIncomeTaxWithheld,
-    'þÿ\x00f\x001\x00_\x001\x002\x00[\x000\x00]': socialSecurityWages,
-    'þÿ\x00f\x001\x00_\x004\x00[\x000\x00]': employerInfo
+    'f1_10[0]': employeeSocialSecurity
 }
 
-fillpdfs.print_form_fields('a.pdf')
+print(forms)
 
-fillpdfs.write_fillable_pdf('a.pdf', 'new.pdf', dict_)
-fillpdfs.flatten_pdf('new.pdf', 'edited.pdf')
-os.remove('new.pdf')
+writer = PdfFileWriter()
+writer.updatePageFormFieldValues(reader.getPage(0), dict_)
