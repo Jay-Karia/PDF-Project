@@ -121,5 +121,5 @@ if __name__ == "__main__":
 
         writer.addPage(page)
 
-    with open(filename_base + "edit.pdf", 'wb') as out_file:
+    with open(filename_base + "new.pdf", 'wb') as out_file:
         writer.write(out_file)
