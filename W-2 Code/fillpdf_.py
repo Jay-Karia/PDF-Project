@@ -41,7 +41,7 @@ employeeAddressLine2 = data['response']['forms'][2]['raw_fields']['employeeAddre
 employeeAddressCity = data['response']['forms'][2]['raw_fields']['employeeAddressCity']['value']
 employeeAddressState = data['response']['forms'][2]['raw_fields']['employeeAddressState']['value']
 employeeAddressZip = data['response']['forms'][2]['raw_fields']['employeeAddressZip']['value']
-employeeInfo = f'{employeeName}{employeeAddressLine1}{employeeAddressLine2}{employeeAddressCity}{employeeAddressState}{employeeAddressZip}'
+employeeInfo = f'{employeeName}\r\n{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity}\r\n{employeeAddressState}\r\n{employeeAddressZip}'
 year = data['response']['forms'][2]['raw_fields']['year']['value']
 # last 2 rows
 statePrimary = data['response']['forms'][2]['raw_fields']['statePrimary']['value']
@@ -59,21 +59,32 @@ localIncomeTaxSecondary = data['response']['forms'][2]['raw_fields']['localIncom
 localityNamePrimary = data['response']['forms'][2]['raw_fields']['localityNamePrimary']['value']
 localityNameSecondary = data['response']['forms'][2]['raw_fields']['localityNameSecondary']['value']
 
+box12aCode = data['response']['forms'][2]['raw_fields']['box12aCode']['value']
+box12bCode = data['response']['forms'][2]['raw_fields']['box12bCode']['value']
+box12cCode = data['response']['forms'][2]['raw_fields']['box12cCode']['value']
+box12dCode = data['response']['forms'][2]['raw_fields']['box12dcode']['value']
+
 keys = ['employeeSocialSecurity','employerIdNo','wagesTipsOtherComp','federalIncomeTaxWithheld','employerName','employerAddressLine1','employerAddressLine2','employerAddressCity','employerAddressState','employerAddressZip','employerInfo','socialSecurityWages','socialSecurityTaxWithheld','medicareWagesAndTips','medicareTaxWithheld','socialSecurityTips','allocatedTips','box9','box12aAmount','box12bAmount','box12cAmount','box12dAmount','box14Other','dependentCareBenefits','employeeLastName','employeeName','employeeAddressLine1','employeeAddressLine2','employeeAddressCity','employeeAddressState','employeeAddressZip','employeeInfo','year','statePrimary','stateSecondary','employerStateIdNumberPrimary','employerStateIdNumberSecondary','stateWagesTipsPrimary','stateWagesTipsSecondary','stateIncomeTaxPrimary','stateIncomeTaxSecondary','localWagesTipsPrimary','localWagesTipsSecondary','localIncomeTaxPrimary','localIncomeTaxSecondary','localityNamePrimary','localityNameSecondary']
 
 values = [employeeSocialSecurity,employerIdNo,wagesTipsOtherComp,federalIncomeTaxWithheld,employerName,employerAddressLine1,employerAddressLine2,employerAddressCity,employerAddressState,employerAddressZip,employerInfo,socialSecurityWages,socialSecurityTaxWithheld,medicareWagesAndTips,medicareTaxWithheld,socialSecurityTips,allocatedTips,box9,box12aAmount,box12bAmount,box12cAmount,box12dAmount,box14Other,dependentCareBenefits,employeeLastName,employeeName,employeeAddressLine1,employeeAddressLine2,employeeAddressCity,employeeAddressState,employeeAddressZip,employeeInfo,year,statePrimary,stateSecondary,employerStateIdNumberPrimary,employerStateIdNumberSecondary,stateWagesTipsPrimary,stateWagesTipsSecondary,stateIncomeTaxPrimary,stateIncomeTaxSecondary,localWagesTipsPrimary,localWagesTipsSecondary,localIncomeTaxPrimary,localIncomeTaxSecondary,localityNamePrimary,localityNameSecondary]
 
 fillpdfs.get_form_fields('a.pdf')
 dict_ = {
-    'þÿ\x00f\x001\x00_\x001\x00[\x000\x00]': employeeSocialSecurity,
-    'þÿ\x00f\x001\x00_\x003\x00[\x000\x00]': employerIdNo,
-    'þÿ\x00f\x001\x00_\x006\x00[\x000\x00]': employeeName,
-    'þÿ\x00f\x001\x00_\x007\x00[\x000\x00]': employeeLastName,
-    'þÿ\x00f\x001\x00_\x001\x000\x00[\x000\x00]': wagesTipsOtherComp,
-    'þÿ\x00f\x001\x00_\x001\x001\x00[\x000\x00]': federalIncomeTaxWithheld,
-    'þÿ\x00f\x001\x00_\x001\x002\x00[\x000\x00]': socialSecurityWages,
-    'þÿ\x00f\x001\x00_\x004\x00[\x000\x00]': employerInfo,
-    'þÿ\x00c\x001\x00_\x004\x00[\x000\x00]': 'Check'
+    'topmostSubform[0].CopyA[0].f1_1[0]': employeeSocialSecurity,
+    'topmostSubform[0].CopyA[0].LeftCol[0].f1_3[0]': employerIdNo,
+    'topmostSubform[0].CopyA[0].LeftCol[0].f1_4[0]': employerInfo,
+    'topmostSubform[0].CopyA[0].RightCol[0].c1_2[0]': 1,
+    'topmostSubform[0].CopyA[0].LeftCol[0].f1_6[0]': employeeName,
+    'topmostSubform[0].CopyA[0].LeftCol[0].f1_7[0]': employeeLastName,
+    'topmostSubform[0].CopyA[0].LeftCol[0].f1_9[0]': employeeInfo,
+    'topmostSubform[0].CopyA[0].RightCol[0].Line12[0].f1_20[0]': box12aCode,
+    'topmostSubform[0].CopyA[0].RightCol[0].Line12[0].f1_21[0]': box12aAmount,
+    'topmostSubform[0].CopyA[0].RightCol[0].Line12[0].f1_22[0]': box12bCode,
+    'topmostSubform[0].CopyA[0].RightCol[0].Line12[0].f1_23[0]': box12bAmount,
+    'topmostSubform[0].CopyA[0].RightCol[0].Line12[0].f1_24[0]': box12cCode,
+    'topmostSubform[0].CopyA[0].RightCol[0].Line12[0].f1_25[0]': box12cAmount,
+    'topmostSubform[0].CopyA[0].RightCol[0].Line12[0].f1_26[0]': box12dCode,
+    'topmostSubform[0].CopyA[0].RightCol[0].Line12[0].f1_27[0]': box12dAmount,
 }
 
 fillpdfs.print_form_fields('a.pdf')
