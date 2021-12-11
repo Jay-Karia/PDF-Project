@@ -1,14 +1,18 @@
 from fillpdf import fillpdfs
 import json
 import os
+import sys
 
 with open('form_field_mapping.json') as json_file:
     data = json.load(json_file)
 
+# print(sys.argv)
+
+# exit()
+
 for formtype in data['response']['forms']:
     if formtype['form_type'] == 'W2':
         print (formtype['raw_fields']['employerName']['value'])
-
     # Other
     # Employer Information
         employerName = formtype['raw_fields']['employerName']['value']
@@ -39,10 +43,13 @@ for formtype in data['response']['forms']:
             # print(values[index], index)
 
         for index in range(0, len(keys)):
-            try:
-                keys[index] = format(float(keys[index]), ',') 
-            except ValueError:
+            if keys[index] is keys[17]:
                 pass
+            else:
+                try:
+                    keys[index] = format(float(keys[index]), ',') 
+                except ValueError:
+                    pass
 
         fillpdfs.get_form_fields('a.pdf')
         dict_ = {
@@ -93,7 +100,6 @@ for formtype in data['response']['forms']:
 
             'topmostSubform[0].CopyA[0].RightCol[0].c1_4[0]': 2
         }
-
 
         fillpdfs.write_fillable_pdf('a.pdf', 'new.pdf', dict_)
         fillpdfs.flatten_pdf('new.pdf', 'edited.pdf')
