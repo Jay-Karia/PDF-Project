@@ -3,18 +3,17 @@ import json
 import os
 import sys
 
-with open('form_field_mapping.json') as json_file:
-    data = json.load(json_file)
+with open('form_field_mapping_v2.json') as json_file:
+ data = json.load(json_file)
 
 # print(sys.argv)
 
 # exit()
 
-for formtype in data['response']['forms']:
-    if formtype['form_type'] == 'W2':
-        print (formtype['raw_fields']['employerName']['value'])
-    # Other
-    # Employer Information
+for formtype in data['forms']:
+    if (formtype['form_type'] == 'W2'):
+        # Other
+        # Employer Information
         employerName = formtype['raw_fields']['employerName']['value']
         employerAddressLine1 = formtype['raw_fields']['employerAddressLine1']['value']
         employerAddressLine2 = formtype['raw_fields']['employerAddressLine2']['value']
@@ -31,15 +30,12 @@ for formtype in data['response']['forms']:
         employeeAddressCity = formtype['raw_fields']['employeeAddressCity']['value']
         employeeAddressState = formtype['raw_fields']['employeeAddressState']['value']
         employeeAddressZip = formtype['raw_fields']['employeeAddressZip']['value']
-        employeeInfo = f'{employeeName}\r\n{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity}\r\n{employeeAddressState}\r\n{employeeAddressZip}'
+        employeeInfo = f'{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity}\r\n{employeeAddressState}\r\n{employeeAddressZip}'
 
         keys = ['employeeSocialSecurityNumber','employerIdNo','wagesTipsOtherComp','federalIncomeTaxWithheld','socialSecurityWages','socialSecurityTaxWithheld','medicareWagesAndTips','medicareTaxWithheld','socialSecurityTips','allocatedTips','box9','box12aAmount','box12bAmount','box12cAmount','box12dAmount','box14Other','dependentCareBenefits','year','statePrimary','stateSecondary','employerStateIdNumberPrimary','employerStateIdNumberSecondary','stateWagesTipsPrimary','stateWagesTipsSecondary','stateIncomeTaxPrimary','stateIncomeTaxSecondary','localWagesTipsPrimary','localWagesTipsSecondary','localIncomeTaxPrimary','localIncomeTaxSecondary','localityNamePrimary','localityNameSecondary','box12aCode','box12bCode','box12cCode','box12dcode','employeeAddressLine1','employeeAddressLine2','employeeAddressCity','employeeAddressState','employeeAddressZip']
 
-        values = []
-
         for index in range(0, len(keys)):
-            v = keys[index] = formtype['raw_fields'][keys[index]]['value'] 
-            values.append(v)
+         keys[index] = formtype['raw_fields'][keys[index]]['value'] 
             # print(values[index], index)
 
         for index in range(0, len(keys)):
@@ -51,7 +47,7 @@ for formtype in data['response']['forms']:
                 except ValueError:
                     pass
 
-        fillpdfs.get_form_fields('a.pdf')
+        # fillpdfs.get_form_fields('a.pdf')
         dict_ = {
             'topmostSubform[0].CopyA[0].f1_1[0]': keys[0],
 
