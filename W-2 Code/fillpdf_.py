@@ -40,10 +40,13 @@ for formtype in data['forms']:
             # print(values[index], index)
 
         for index in range(0, len(keys)):
-            try:
-                keys[index] = format(float(keys[index]), ',') 
-            except ValueError:
+            if keys[index] is keys[17]:
                 pass
+            else:
+                try:
+                    keys[index] = format(float(keys[index]), ',') 
+                except ValueError:
+                    pass
 
         # fillpdfs.get_form_fields('v2.pdf')
         dict_ = {
