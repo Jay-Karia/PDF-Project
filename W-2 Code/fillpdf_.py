@@ -30,7 +30,7 @@ for formtype in data['forms']:
         employeeAddressCity = formtype['raw_fields']['employeeAddressCity']['value']
         employeeAddressState = formtype['raw_fields']['employeeAddressState']['value']
         employeeAddressZip = formtype['raw_fields']['employeeAddressZip']['value']
-        employeeInfo = f'{employeeName}\r\n{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity}\r\n{employeeAddressState}\r\n{employeeAddressZip}'
+        employeeInfo = f'{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity}\r\n{employeeAddressState}\r\n{employeeAddressZip}'
         year = formtype['raw_fields']['year']['value']
 
         keys = ['employeeSocialSecurityNumber','employerIdNo','wagesTipsOtherComp','federalIncomeTaxWithheld','socialSecurityWages','socialSecurityTaxWithheld','medicareWagesAndTips','medicareTaxWithheld','socialSecurityTips','allocatedTips','box9','box12aAmount','box12bAmount','box12cAmount','box12dAmount','box14Other','dependentCareBenefits','year','statePrimary','stateSecondary','employerStateIdNumberPrimary','employerStateIdNumberSecondary','stateWagesTipsPrimary','stateWagesTipsSecondary','stateIncomeTaxPrimary','stateIncomeTaxSecondary','localWagesTipsPrimary','localWagesTipsSecondary','localIncomeTaxPrimary','localIncomeTaxSecondary','localityNamePrimary','localityNameSecondary','box12aCode','box12bCode','box12cCode','box12dcode','employeeAddressLine1','employeeAddressLine2','employeeAddressCity','employeeAddressState','employeeAddressZip']
@@ -116,8 +116,11 @@ for formtype in data['forms']:
         def get_overlay_canvas() -> io.BytesIO:
             data = io.BytesIO()
             pdf = canvas.Canvas(data)
-            pdf.setFontSize(size=24)
-            pdf.drawString(x=300, y=436, text=keys[17])
+            with open('OCR A Std Regular.ttf', 'r'):
+                pdf.setFontSize(size=24)
+                available_fonts = pdf.getAvailableFonts()
+                pdf.setFont(psfontname='Helvetica-Bold', size=24)
+                pdf.drawString(x=300, y=436, text=keys[17])
             # row 1
 
             pdf.save()
