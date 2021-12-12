@@ -3,9 +3,10 @@ import pdfrw
 import io
 from reportlab.pdfgen import canvas
 import json
-import os
+from pdf2image import convert_from_path
 import sys
 
+# try:
 if len(sys.argv) != 2:
     if '.json' in sys.argv[1]:
 
@@ -112,8 +113,8 @@ if len(sys.argv) != 2:
             # fillpdfs.print_form_fields('v2.pdf')
 
             fillpdfs.write_fillable_pdf('v2.pdf', 'new.pdf', dict_)
-            fillpdfs.flatten_pdf('new.pdf', 'edited.pdf')
-            os.remove('new.pdf')
+            # fillpdfs.flatten_pdf('new.pdf', 'edited.pdf')
+            # os.remove('new.pdf')
 
             def run():
                 canvas_data = get_overlay_canvas()
@@ -156,5 +157,17 @@ if len(sys.argv) != 2:
                     f.write(form.read())
 
             run()
+
+        # pdf_file = 'edited.pdf'
+        # pages = convert_from_path(pdf_file)
+        # img_file = pdf_file.replace('.pdf', '')
+        # count = 0
+        # for page in pages:
+        #     count+=1
+        #     jpeg_file = img_file+""+str(count)+'.jpeg'
+        #     page.save(jpeg_file, 'JPEG')
 else:
     print('Missing required arguments!')
+
+# except:
+#     print('An Error Occurred')
