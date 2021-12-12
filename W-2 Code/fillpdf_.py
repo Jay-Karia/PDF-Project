@@ -1,19 +1,16 @@
 from fillpdf import fillpdfs
 import json
 import os
-import sys
 
 with open('form_field_mapping_v2.json') as json_file:
- data = json.load(json_file)
-
-# print(sys.argv)
-
-# exit()
+    data = json.load(json_file)
 
 for formtype in data['forms']:
-    if (formtype['form_type'] == 'W2'):
-        # Other
-        # Employer Information
+    if formtype['form_type'] == 'W2':
+        print (formtype['raw_fields']['employerName']['value'])
+
+# Other
+# Employer Information
         employerName = formtype['raw_fields']['employerName']['value']
         employerAddressLine1 = formtype['raw_fields']['employerAddressLine1']['value']
         employerAddressLine2 = formtype['raw_fields']['employerAddressLine2']['value']
@@ -30,24 +27,25 @@ for formtype in data['forms']:
         employeeAddressCity = formtype['raw_fields']['employeeAddressCity']['value']
         employeeAddressState = formtype['raw_fields']['employeeAddressState']['value']
         employeeAddressZip = formtype['raw_fields']['employeeAddressZip']['value']
-        employeeInfo = f'{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity}\r\n{employeeAddressState}\r\n{employeeAddressZip}'
+        employeeInfo = f'{employeeName}\r\n{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity}\r\n{employeeAddressState}\r\n{employeeAddressZip}'
+        year = formtype['raw_fields']['year']['value']
 
         keys = ['employeeSocialSecurityNumber','employerIdNo','wagesTipsOtherComp','federalIncomeTaxWithheld','socialSecurityWages','socialSecurityTaxWithheld','medicareWagesAndTips','medicareTaxWithheld','socialSecurityTips','allocatedTips','box9','box12aAmount','box12bAmount','box12cAmount','box12dAmount','box14Other','dependentCareBenefits','year','statePrimary','stateSecondary','employerStateIdNumberPrimary','employerStateIdNumberSecondary','stateWagesTipsPrimary','stateWagesTipsSecondary','stateIncomeTaxPrimary','stateIncomeTaxSecondary','localWagesTipsPrimary','localWagesTipsSecondary','localIncomeTaxPrimary','localIncomeTaxSecondary','localityNamePrimary','localityNameSecondary','box12aCode','box12bCode','box12cCode','box12dcode','employeeAddressLine1','employeeAddressLine2','employeeAddressCity','employeeAddressState','employeeAddressZip']
 
+        values = []
+
         for index in range(0, len(keys)):
-         keys[index] = formtype['raw_fields'][keys[index]]['value'] 
+            v = keys[index] = formtype['raw_fields'][keys[index]]['value'] 
+            values.append(v)
             # print(values[index], index)
 
         for index in range(0, len(keys)):
-            if keys[index] is keys[17]:
+            try:
+                keys[index] = format(float(keys[index]), ',') 
+            except ValueError:
                 pass
-            else:
-                try:
-                    keys[index] = format(float(keys[index]), ',') 
-                except ValueError:
-                    pass
 
-        # fillpdfs.get_form_fields('a.pdf')
+        # fillpdfs.get_form_fields('v2.pdf')
         dict_ = {
             'topmostSubform[0].CopyA[0].f1_1[0]': keys[0],
 
@@ -97,6 +95,7 @@ for formtype in data['forms']:
             'topmostSubform[0].CopyA[0].RightCol[0].c1_4[0]': 2
         }
 
-        fillpdfs.write_fillable_pdf('a.pdf', 'new.pdf', dict_)
+        fillpdfs.write_fillable_pdf('v2.pdf', 'new.pdf', dict_)
         fillpdfs.flatten_pdf('new.pdf', 'edited.pdf')
         os.remove('new.pdf')
+        # fillpdfs.print_form_fields('v2.pdf')
