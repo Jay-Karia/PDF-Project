@@ -1,4 +1,7 @@
 from fillpdf import fillpdfs
+import pdfrw
+import io
+from reportlab.pdfgen import canvas
 import json
 import os
 
@@ -7,7 +10,7 @@ with open('form_field_mapping_v2.json') as json_file:
 
 for formtype in data['forms']:
     if formtype['form_type'] == 'W2':
-        print (formtype['raw_fields']['employerName']['value'])
+        # print (formtype['raw_fields']['employerName']['value'])
 
 # Other
 # Employer Information
@@ -49,6 +52,7 @@ for formtype in data['forms']:
                     pass
 
         # fillpdfs.get_form_fields('v2.pdf')
+
         dict_ = {
             'topmostSubform[0].CopyA[0].f1_1[0]': keys[0],
 
@@ -98,7 +102,42 @@ for formtype in data['forms']:
             'topmostSubform[0].CopyA[0].RightCol[0].c1_4[0]': 2
         }
 
+        # fillpdfs.print_form_fields('v2.pdf')
+
         fillpdfs.write_fillable_pdf('v2.pdf', 'new.pdf', dict_)
         fillpdfs.flatten_pdf('new.pdf', 'edited.pdf')
         os.remove('new.pdf')
-        # fillpdfs.print_form_fields('v2.pdf')
+
+        def run():
+            canvas_data = get_overlay_canvas()
+            form = merge(canvas_data, template_path='./edited.pdf')
+            save(form, filename='merged.pdf')
+
+        def get_overlay_canvas() -> io.BytesIO:
+            data = io.BytesIO()
+            pdf = canvas.Canvas(data)
+            pdf.setFontSize(size=24)
+            pdf.drawString(x=300, y=436, text=keys[17])
+            # row 1
+
+            pdf.save()
+            data.seek(0)
+            return data
+
+        def merge(overlay_canvas: io.BytesIO, template_path: str) -> io.BytesIO:
+            template_pdf = pdfrw.PdfReader(template_path)
+            overlay_pdf = pdfrw.PdfReader(overlay_canvas)
+            for page, data in zip(template_pdf.pages, overlay_pdf.pages):
+                overlay = pdfrw.PageMerge().add(data)[0]
+                pdfrw.PageMerge(page).add(overlay).render()
+            form = io.BytesIO()
+            pdfrw.PdfWriter().write(form, template_pdf)
+            form.seek(0)
+            return form
+
+
+        def save(form: io.BytesIO, filename: str):
+            with open(filename, 'wb') as f:
+                f.write(form.read())
+
+        run()
