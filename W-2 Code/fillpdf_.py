@@ -26,7 +26,7 @@ if (len(sys.argv) != 2):
                 employerAddressCity = formtype['raw_fields']['employerAddressCity']['value']
                 employerAddressState = formtype['raw_fields']['employerAddressState']['value']
                 employerAddressZip = formtype['raw_fields']['employerAddressZip']['value']
-                employerInfo = f'{employerName}\r\n{employerAddressLine1}\r\n{employerAddressLine2}\r\n{employerAddressCity}\r\n{employerAddressState}\n{employerAddressZip}'
+                employerInfo = f'{employerName}\r\n{employerAddressLine1}\r\n{employerAddressLine2}\r\n{employerAddressCity} {employerAddressState} {employerAddressZip}'
                 # ------
                 # Employee Information
                 employeeLastName = formtype['raw_fields']['employeeName']['value'].split(' ')[2]
@@ -36,7 +36,7 @@ if (len(sys.argv) != 2):
                 employeeAddressCity = formtype['raw_fields']['employeeAddressCity']['value']
                 employeeAddressState = formtype['raw_fields']['employeeAddressState']['value']
                 employeeAddressZip = formtype['raw_fields']['employeeAddressZip']['value']
-                employeeInfo = f'{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity}\r\n{employeeAddressState}\r\n{employeeAddressZip}'
+                employeeInfo = f'\n{employeeAddressLine1}\r\n{employeeAddressLine2}\r\n{employeeAddressCity} {employeeAddressState} {employeeAddressZip}'
                 year = formtype['raw_fields']['year']['value']
 
                 keys = ['employeeSocialSecurityNumber','employerIdNo','wagesTipsOtherComp','federalIncomeTaxWithheld','socialSecurityWages','socialSecurityTaxWithheld','medicareWagesAndTips','medicareTaxWithheld','socialSecurityTips','allocatedTips','box9','box12aAmount','box12bAmount','box12cAmount','box12dAmount','box14Other','dependentCareBenefits','year','statePrimary','stateSecondary','employerStateIdNumberPrimary','employerStateIdNumberSecondary','stateWagesTipsPrimary','stateWagesTipsSecondary','stateIncomeTaxPrimary','stateIncomeTaxSecondary','localWagesTipsPrimary','localWagesTipsSecondary','localIncomeTaxPrimary','localIncomeTaxSecondary','localityNamePrimary','localityNameSecondary','box12aCode','box12bCode','box12cCode','box12dcode','employeeAddressLine1','employeeAddressLine2','employeeAddressCity','employeeAddressState','employeeAddressZip']
@@ -103,9 +103,7 @@ if (len(sys.argv) != 2):
                     'topmostSubform[0].CopyA[0].f1_39[0]': keys[27],
                     'topmostSubform[0].CopyA[0].f1_34[0]': keys[28],
                     'topmostSubform[0].CopyA[0].f1_41[0]': keys[29],
-                    'topmostSubform[0].CopyA[0].f1_35[0]': keys[30],
-
-                    'topmostSubform[0].CopyA[0].RightCol[0].c1_4[0]': 2
+                    'topmostSubform[0].CopyA[0].f1_35[0]': keys[30]
                 }
 
                 # fillpdfs.print_form_fields('v2.pdf')
