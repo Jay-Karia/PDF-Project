@@ -1,10 +1,8 @@
-from shutil import Error
 from fillpdf import fillpdfs
 import pdfrw
 import io
 from reportlab.pdfgen import canvas
 import json
-from pdf2image import convert_from_path
 import sys
 import os
 
@@ -12,8 +10,8 @@ if (len(sys.argv) == 4):
     def printing_info():
 
         '''
-        This is a Function which will populate the data from the json file: form_field_mapping_v2.json
-        into the v2.pdf file. With the help of fillpdf module, and will generate a new file: edited.pdf
+        This function will populate the data from the json file: form_field_mapping_v2.json
+        into the output PDF file. 
         '''
 
         if '.json' in sys.argv[1]:
@@ -99,7 +97,6 @@ if (len(sys.argv) == 4):
                     'topmostSubform[0].CopyA[0].RightCol[0].f1_28[0]': keys[15],
 
                     'topmostSubform[0].CopyA[0].f1_29[0]': keys[18],
-                    'topmostSubform[0].CopyA[0].f1_36[0]': keys[19],
                     'topmostSubform[0].CopyA[0].f1_30[0]': keys[20],
                     'topmostSubform[0].CopyA[0].f1_36[0]': keys[21],
                     'topmostSubform[0].CopyA[0].f1_31[0]': keys[22],
@@ -111,7 +108,6 @@ if (len(sys.argv) == 4):
                     'topmostSubform[0].CopyA[0].f1_34[0]': keys[28],
                     'topmostSubform[0].CopyA[0].f1_41[0]': keys[29],
                     'topmostSubform[0].CopyA[0].f1_35[0]': keys[30],
-                    'topmostSubform[0].CopyA[0].f1_42[0]': keys[31]
                 }
 
                 # fillpdfs.print_form_fields('v2.pdf')
@@ -125,8 +121,7 @@ if (len(sys.argv) == 4):
     def year_printing():
 
         '''
-        This function will populate the "year" data taken from the parameter while running the script
-        It will create a new file: final.pdf with the "year" data.
+        This function will populate the "year" taken from the input parameter while running the script
         '''
 
         def run():
@@ -171,16 +166,14 @@ if (len(sys.argv) == 4):
 
         run()
 
-    # try:
-    printing_info()
-    year_printing()
-    os.remove('edited.pdf')
-    # except IndexError:
-    #     print('Enter a valid json file or its location!')
-    # except KeyError:
-    #     print('The format of the given json file doesn\'t match')
+    try:
+        printing_info()
+        year_printing()
+        os.remove('edited.pdf')
+        print('PDF generated successfully!')
+    except IndexError:
+        print('Could not generate PDF!')
 
 else:
     print(f"Missing required arguments, given {len(sys.argv)}")
-    print("Required Arguments: 1) filename 2) json file 3) DDMMYYYY 4) pdf file name to be populated")
-    exit()
+    print("Required Arguments: 1) filename 2) json file 3) DDMMYYYY 4) PDF file name to be generated")
