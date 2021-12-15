@@ -57,7 +57,7 @@ if (len(sys.argv) == 4):
                         pass
                     else:
                         try:
-                            keys[index] = format(float(keys[index]), ',') 
+                            keys[index] = format(float(keys[index]), ',')+'0' 
                         except ValueError:
                             pass
 
@@ -175,5 +175,5 @@ if (len(sys.argv) == 4):
         print('Could not generate PDF!')
 
 else:
-    print(f"Missing required arguments, given {len(sys.argv)}")
-    print("Required Arguments: 1) filename 2) json file 3) DDMMYYYY 4) PDF file name to be generated")
+    print(f"Required arguments missing, arguments given -> {len(sys.argv)}\r\n")
+    print("Required Arguments: 1) Python Script 2) Inputs JSON file 3) DDMMYYYY 4) PDF file name to be generated")
