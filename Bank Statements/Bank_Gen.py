@@ -23,7 +23,7 @@ if len(sys.argv) == 2:
     fields = reader.getFormTextFields()
     num_pages = reader.getNumPages()
     raw_date = sys.argv[1]
-    # getting the year
+    # calculating the date from the parameter
     year = ''
     for index in range(4,8):
         year += raw_date[index]
@@ -92,8 +92,6 @@ fillpdfs.write_fillable_pdf('v2.pdf', 'edited.pdf', dict_)
 # Transactions could go over multiple pages, so ending balance should be on last page
 # We will need a running balance for transactions
 # Page x of n footer should be posted based on final page
-# Period statement on page header should display beginning to end of parameter month. Please allow for days in month and leap years. So parameter 01022020 would give us “February 01, 2020 through February 28, 2020” ---- doing
-# Transactions date month year should be adjusted to be based on parameter date.
 # So JSON transaction date 10/15/21 with parameter date 01022020 leads to a PDF transaction output date of 02/15/20
 # Deposit amounts in bold, please include minus signs for negative transactions
 # Deposits and additions. Sum of positive transactions
