@@ -12,7 +12,7 @@ with open('Bank_Statement_transactions.json') as file:
     bank_name = data['response']['bank_accounts']['7942445']['bank_name']
 
 # all the keys requires to populate the pdf
-keys = ['account_number', 'account_holders', 'holder_address_1', 'holder_address_2', 'holder_city', 'holder_state', 'holder_zip', 'account_type', 'begin_balance', 'end_balance', 'txn_date', 'description', 'amount', 'running_total']
+keys = ['account_number', 'account_holders', 'holder_address_1', 'holder_address_2', 'holder_city', 'holder_state', 'holder_zip']
 
 # if the arguments are 2 then proceed
 if len(sys.argv) == 2:
@@ -78,11 +78,25 @@ if len(sys.argv) == 2:
     else:
         print("The Parameter date should be the first date of the month")
 
+values = []
+
+for index in range(0, len(keys)):
+    v = account_number = data['response']['bank_accounts']['7942445'][keys[index]]
+    values.append(v)
+
 # populating the fields
 dict_ = {
-    'period_input': final_date
+    'period_input': final_date,
+    'account_number': values[0],
+    'account_holders': values[1],
+    'holder_address_1': values[2],
+    'holder_address_2': values[3],
+    'holder_city': values[4],
+    'holder_state': values[5],
+    'holder_zip': values[6],
 }
 
+# fillpdfs.print_form_fields('v2.pdf')
 fillpdfs.write_fillable_pdf('v2.pdf', 'edited.pdf', dict_)
 
 # Parameter = file_name, DDMMYYYY
