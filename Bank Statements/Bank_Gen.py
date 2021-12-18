@@ -1,13 +1,20 @@
+# Importing required modules
+from fillpdf import fillpdfs
 from PyPDF2 import PdfFileReader
 import json
 import sys
 
+from PyPDF2.pdf import PdfFileWriter
+
+# reading the json file
 with open('Bank_Statement_transactions.json') as file:
     data = json.load(file)
     bank_name = data['response']['bank_accounts']['7942445']['bank_name']
 
+# all the keys requires to populate the pdf
 keys = ['account_number', 'account_holders', 'holder_address_1', 'holder_address_2', 'holder_city', 'holder_state', 'holder_zip', 'account_type', 'begin_balance', 'end_balance', 'txn_date', 'description', 'amount', 'running_total']
 
+# if the arguments are 2 then proceed
 if len(sys.argv) == 2:
     if len(sys.argv[1]) != 8:
         print('The date format should be DDMMYYY')
@@ -16,19 +23,67 @@ if len(sys.argv) == 2:
     fields = reader.getFormTextFields()
     num_pages = reader.getNumPages()
     raw_date = sys.argv[1]
-
-    if not raw_date.startswith("01"):
-        print("The Parameter date should be the first date of the month")
-
     # getting the year
-    
     year = ''
     for index in range(4,8):
         year += raw_date[index]
-    print(year)
 
-    #getting the month
+    # getting the start_date and end_date
+    if raw_date.startswith("01"):
+        # getting the date
+        date = raw_date[0]+raw_date[1]
+        #getting the month
+        month = raw_date[2]+raw_date[3]
+        new_month = ''
+        end_date = ''
+        if (month == "01"):
+            new_month = "January"
+            end_date = "31"+' '+new_month+', '+year
+        elif (month == "02"):
+            new_month = "February"
+            end_date = "28"+' '+new_month+', '+year
+        elif (month == "03"):
+            new_month = "March"
+            end_date = "31"+' '+new_month+', '+year
+        elif (month == "04"):
+            new_month = "April"
+            end_date = "30"+' '+new_month+', '+year
+        elif (month == "05"):
+            new_month = "May"
+            end_date = "31"+' '+new_month+', '+year
+        elif (month == "06"):
+            new_month = "June"
+            end_date = "30"+' '+new_month+', '+year
+        elif (month == "07"):
+            new_month = "July"
+            end_date = "31"+' '+new_month+', '+year
+        elif (month == "08"):
+            new_month = "August"
+            end_date = "31"+' '+new_month+', '+year
+        elif (month == "09"):
+            new_month = "September"
+            end_date = "30"+' '+new_month+', '+year
+        elif (month == "10"):
+            new_month = "October"
+            end_date = "31"+' '+new_month+', '+year
+        elif (month == "11"):
+            new_month = "November"
+            end_date = "30"+' '+new_month+', '+year
+        elif (month == "12"):
+            new_month = "December"
+            end_date = "31"+' '+new_month+', '+year
+        start_date = date+' '+new_month+', '+year
+        final_date = f'{start_date} through {end_date}'
 
+    else:
+        print("The Parameter date should be the first date of the month")
+
+# populating the fields
+dict_ = {
+    'period_input': final_date
+}
+
+fillpdfs.write_fillable_pdf('v2.pdf', 'edited.pdf', dict_)
 
 # Parameter = file_name, DDMMYYYY
 
