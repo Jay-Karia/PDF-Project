@@ -81,8 +81,33 @@ if len(sys.argv) == 2:
 values = []
 
 for index in range(0, len(keys)):
-    v = account_number = data['response']['bank_accounts']['7942445'][keys[index]]
-    values.append(v)
+    b_balance = account_number = data['response']['bank_accounts']['7942445'][keys[index]]
+    values.append(b_balance)
+
+for periods in data['response']['bank_accounts']['7942445']['periods']:
+    b_balance = periods['begin_balance']
+    e_balance = periods['end_balance']
+    values.append(b_balance)
+    values.append(e_balance)
+
+positive_amounts = []
+sum_positive = 0.0
+sum_negative = 0
+negative_amounts = []
+
+for amount in data['response']['txns']:
+    a = amount['amount']
+    if '-' not in a:
+        positive_amounts.append(a)
+        a = float(a)
+        sum_positive+= a
+    else:
+        negative_amounts.append(a)
+        a = float(a)
+        sum_negative+=a
+
+print(sum_positive)
+print(sum_negative)
 
 # populating the fields
 dict_ = {
@@ -94,10 +119,16 @@ dict_ = {
     'holder_city': values[4],
     'holder_state': values[5],
     'holder_zip': values[6],
+    'begin_balance': values[7],
+    'end_balance': values[8],
+    'deposits': sum_positive,
+    'withdrawals': sum_negative,
 }
+
 
 # fillpdfs.print_form_fields('v2.pdf')
 fillpdfs.write_fillable_pdf('v2.pdf', 'edited.pdf', dict_)
+# fillpdfs.print_form_fields('v2.pdf')
 
 # Parameter = file_name, DDMMYYYY
 
