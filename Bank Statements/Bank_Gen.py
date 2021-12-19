@@ -1,10 +1,9 @@
 # Importing required modules
 from fillpdf import fillpdfs
 from PyPDF2 import PdfFileReader
+from reportlab.pdfgen import canvas
 import json
 import sys
-
-from PyPDF2.pdf import PdfFileWriter
 
 # reading the json file
 with open('Bank_Statement_transactions.json') as file:
@@ -12,7 +11,7 @@ with open('Bank_Statement_transactions.json') as file:
     bank_name = data['response']['bank_accounts']['7942445']['bank_name']
 
 # all the keys requires to populate the pdf
-keys = ['account_number', 'account_holders', 'holder_address_1', 'holder_address_2', 'holder_city', 'holder_state', 'holder_zip']
+keys = ['account_number', 'account_holders', 'holder_address_1', 'holder_address_2', 'holder_city', 'holder_state', 'holder_zip', 'account_type']
 
 # if the arguments are 2 then proceed
 if len(sys.argv) == 2:
@@ -106,9 +105,6 @@ for amount in data['response']['txns']:
         a = float(a)
         sum_negative+=a
 
-print(sum_positive)
-print(sum_negative)
-
 # populating the fields
 dict_ = {
     'period_input': final_date,
@@ -119,10 +115,11 @@ dict_ = {
     'holder_city': values[4],
     'holder_state': values[5],
     'holder_zip': values[6],
-    'begin_balance': values[7],
-    'end_balance': values[8],
+    'begin_balance': values[8],
+    'end_balance': values[9],
     'deposits': sum_positive,
     'withdrawals': sum_negative,
+    'account_type': values[7],
 }
 
 
