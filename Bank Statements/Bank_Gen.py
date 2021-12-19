@@ -152,6 +152,11 @@ dict_ = {
     'deposits': sum_positive,
     'withdrawals': sum_negative,
     'account_type': values[7],
+
+    'txn_date': adj_txn_dates[0],
+    'description': descriptions[0],
+    'amount': amounts[0],
+    'running_total': running_total[0]
 }
 
 
