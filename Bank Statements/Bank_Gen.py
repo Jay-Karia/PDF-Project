@@ -1,7 +1,6 @@
 # Importing required modules
 from fillpdf import fillpdfs
-from PyPDF2 import PdfFileReader
-from reportlab.pdfgen import canvas
+from PyPDF2 import PdfFileReader, PdfFileWriter
 import json
 import sys
 
@@ -129,6 +128,14 @@ for items in data['response']['txns']:
     td = td.replace('/'+td_year, '')
     
     adj_txn_dates.append(td)
+
+def add_new_transactions_page():
+    '''Adds a new page for transactions details'''
+    print("More than 7 transactions")
+
+total_txns = len(data['response']['txns'])
+if total_txns > 7:
+    add_new_transactions_page()
 
 # populating the fields
 dict_ = {
