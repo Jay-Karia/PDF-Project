@@ -23,55 +23,55 @@ if len(sys.argv) == 2:
     num_pages = reader.getNumPages()
     raw_date = sys.argv[1]
     # calculating the date from the parameter
-    year = ''
+    param_year = ''
     for index in range(4,8):
-        year += raw_date[index]
+        param_year += raw_date[index]
 
     # getting the start_date and end_date
     if raw_date.startswith("01"):
         # getting the date
         date = raw_date[0]+raw_date[1]
         #getting the month
-        month = raw_date[2]+raw_date[3]
+        param_month = raw_date[2]+raw_date[3]
         new_month = ''
         end_date = ''
-        if (month == "01"):
+        if (param_month == "01"):
             new_month = "January"
-            end_date = "31"+' '+new_month+', '+year
-        elif (month == "02"):
+            end_date = "31"+' '+new_month+', '+param_year
+        elif (param_month == "02"):
             new_month = "February"
-            end_date = "28"+' '+new_month+', '+year
-        elif (month == "03"):
+            end_date = "28"+' '+new_month+', '+param_year
+        elif (param_month == "03"):
             new_month = "March"
-            end_date = "31"+' '+new_month+', '+year
-        elif (month == "04"):
+            end_date = "31"+' '+new_month+', '+param_year
+        elif (param_month == "04"):
             new_month = "April"
-            end_date = "30"+' '+new_month+', '+year
-        elif (month == "05"):
+            end_date = "30"+' '+new_month+', '+param_year
+        elif (param_month == "05"):
             new_month = "May"
-            end_date = "31"+' '+new_month+', '+year
-        elif (month == "06"):
+            end_date = "31"+' '+new_month+', '+param_year
+        elif (param_month == "06"):
             new_month = "June"
-            end_date = "30"+' '+new_month+', '+year
-        elif (month == "07"):
+            end_date = "30"+' '+new_month+', '+param_year
+        elif (param_month == "07"):
             new_month = "July"
-            end_date = "31"+' '+new_month+', '+year
-        elif (month == "08"):
+            end_date = "31"+' '+new_month+', '+param_year
+        elif (param_month == "08"):
             new_month = "August"
-            end_date = "31"+' '+new_month+', '+year
-        elif (month == "09"):
+            end_date = "31"+' '+new_month+', '+param_year
+        elif (param_month == "09"):
             new_month = "September"
-            end_date = "30"+' '+new_month+', '+year
-        elif (month == "10"):
+            end_date = "30"+' '+new_month+', '+param_year
+        elif (param_month == "10"):
             new_month = "October"
-            end_date = "31"+' '+new_month+', '+year
-        elif (month == "11"):
+            end_date = "31"+' '+new_month+', '+param_year
+        elif (param_month == "11"):
             new_month = "November"
-            end_date = "30"+' '+new_month+', '+year
-        elif (month == "12"):
+            end_date = "30"+' '+new_month+', '+param_year
+        elif (param_month == "12"):
             new_month = "December"
-            end_date = "31"+' '+new_month+', '+year
-        start_date = date+' '+new_month+', '+year
+            end_date = "31"+' '+new_month+', '+param_year
+        start_date = date+' '+new_month+', '+param_year
         final_date = f'{start_date} through {end_date}'
 
     else:
@@ -112,6 +112,7 @@ descriptions = []
 amounts = []
 running_total = []
 running_sum = 0.0
+adj_txn_dates = []
 
 for items in data['response']['txns']:
     d = items['description']
@@ -120,6 +121,14 @@ for items in data['response']['txns']:
     descriptions.append(d)
     amounts.append(am)
     running_total.append(running_sum+values[8])
+
+    td = items['txn_date']
+    td_month = td[0]+td[1]
+    td_year = td[6]+td[7]+td[8]+td[9]
+    td = td.replace(td_month, param_month)
+    td = td.replace('/'+td_year, '')
+    
+    adj_txn_dates.append(td)
 
 # populating the fields
 dict_ = {
