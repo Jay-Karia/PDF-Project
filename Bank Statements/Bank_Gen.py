@@ -89,9 +89,12 @@ for periods in data['response']['bank_accounts']['7942445']['periods']:
     values.append(b_balance)
     values.append(e_balance)
 
+values[8] = float(values[8])
+values[9] = float(values[9])
+
 positive_amounts = []
 sum_positive = 0.0
-sum_negative = 0
+sum_negative = 0.0
 negative_amounts = []
 
 for amount in data['response']['txns']:
@@ -104,6 +107,19 @@ for amount in data['response']['txns']:
         negative_amounts.append(a)
         a = float(a)
         sum_negative+=a
+
+descriptions = []
+amounts = []
+running_total = []
+running_sum = 0.0
+
+for items in data['response']['txns']:
+    d = items['description']
+    am = float(items['amount'])
+    running_sum += am
+    descriptions.append(d)
+    amounts.append(am)
+    running_total.append(running_sum+values[8])
 
 # populating the fields
 dict_ = {
@@ -129,12 +145,7 @@ fillpdfs.write_fillable_pdf('v2.pdf', 'edited.pdf', dict_)
 
 # Parameter = file_name, DDMMYYYY
 
-# Bank statements
-# Transactions are submitted through JSON (Transaction date is in US format)
 # Transactions could go over multiple pages, so ending balance should be on last page
 # We will need a running balance for transactions
 # Page x of n footer should be posted based on final page
 # So JSON transaction date 10/15/21 with parameter date 01022020 leads to a PDF transaction output date of 02/15/20
-# Deposit amounts in bold, please include minus signs for negative transactions
-# Deposits and additions. Sum of positive transactions
-# Withdrawals and payments. Sum of negative transactions
