@@ -105,13 +105,13 @@ negative_amounts = []
 for amount in data['response']['txns']:
     a = amount['amount']
     if '-' not in a:
+        a = float(a)
         positive_amounts.append(a)
+        sum_positive= round(sum_positive + a, 2)
+    elif '-' in a:
         a = float(a)
-        sum_positive+= a
-    else:
         negative_amounts.append(a)
-        a = float(a)
-        sum_negative+=a
+        sum_negative= round(sum_negative + a, 2)
 
 descriptions = []
 amounts = []
@@ -134,9 +134,6 @@ for items in data['response']['txns']:
     td = td.replace('/'+td_year, '')
     
     adj_txn_dates.append(td)
-
-# Iterating through pages
-
 
 def add_new_transactions_page():
     '''Adds a new page for transactions details'''
