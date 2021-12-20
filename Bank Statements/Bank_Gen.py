@@ -1,6 +1,6 @@
 # Importing required modules
 from fillpdf import fillpdfs
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfFileReader
 import json
 import sys
 
@@ -91,6 +91,12 @@ for periods in data['response']['bank_accounts']['7942445']['periods']:
 values[8] = float(values[8])
 values[9] = float(values[9])
 
+holder_info = f"{values[1][0]}\n{values[2]}\n{values[3]}\n{values[4]} {values[5]} {values[6]}"
+if values[2] == None:
+    holder_info = f"{values[1][0]}\n{values[3]}\n{values[4]} {values[5]} {values[6]}"
+elif values[3] == None:
+    holder_info = f"{values[1][0]}\n{values[2]}\n{values[4]} {values[5]} {values[6]}"
+
 positive_amounts = []
 sum_positive = 0.0
 sum_negative = 0.0
@@ -129,6 +135,9 @@ for items in data['response']['txns']:
     
     adj_txn_dates.append(td)
 
+# Iterating through pages
+
+
 def add_new_transactions_page():
     '''Adds a new page for transactions details'''
     print("More than 7 transactions")
@@ -141,12 +150,9 @@ if total_txns > 7:
 dict_ = {
     'period_input': final_date,
     'account_number': values[0],
-    'account_holders': values[1],
-    'holder_address_1': values[2],
-    'holder_address_2': values[3],
-    'holder_city': values[4],
-    'holder_state': values[5],
-    'holder_zip': values[6],
+
+    'holder_info': holder_info,
+
     'begin_balance': values[8],
     'end_balance': values[9],
     'deposits': sum_positive,
