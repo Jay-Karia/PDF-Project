@@ -132,8 +132,18 @@ for items in data['response']['txns']:
     td_year = td[6]+td[7]+td[8]+td[9]
     td = td.replace(td_month, param_month)
     td = td.replace('/'+td_year, '')
-    
     adj_txn_dates.append(td)
+
+new_dict = {}
+for index in range(0, len(data['response']['txns'])):
+    
+    new_dict[f"date_{index}"] = adj_txn_dates[index]
+    new_dict[f"amount_{index}"] = amounts[index]
+    new_dict[f"description_{index}"] = descriptions[index]
+    new_dict[f"running_total_{index}"] = running_total[index]
+
+    fillpdfs.write_fillable_pdf('v2.pdf', 'edited.pdf', new_dict)
+
 
 def add_new_transactions_page():
     '''Adds a new page for transactions details'''
@@ -156,15 +166,11 @@ dict_ = {
     'withdrawals': sum_negative,
     'account_type': values[7],
 
-    'txn_date': adj_txn_dates[0],
-    'description': descriptions[0],
-    'amount': amounts[0],
-    'running_total': running_total[0]
 }
 
 
 # fillpdfs.print_form_fields('v2.pdf')
-fillpdfs.write_fillable_pdf('v2.pdf', 'edited.pdf', dict_)
+fillpdfs.write_fillable_pdf('edited.pdf', 'final.pdf', dict_)
 # fillpdfs.print_form_fields('v2.pdf')
 
 # Parameter = file_name, DDMMYYYY
