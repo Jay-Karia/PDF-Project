@@ -1,8 +1,13 @@
 # Importing required modules
 from fillpdf import fillpdfs
 from PyPDF2 import PdfFileReader
+from reportlab.pdfgen.canvas import Canvas
+from pdfrw import PdfReader
+from pdfrw.toreportlab import makerl
+from pdfrw.buildxobj import pagexobj
 import json
 import sys
+import os
 
 # reading the json file
 with open('Bank_Statement_transactions.json') as file:
@@ -168,8 +173,23 @@ dict_ = {
 
 }
 
+reader = PdfReader("edited.pdf")
+pages = [pagexobj(p) for p in reader.pages]
 
-# fillpdfs.print_form_fields('v2.pdf')
+canvas = Canvas("edited.pdf")
+
+for page_num, page in enumerate(pages, start=1):
+    canvas.doForm(makerl(canvas, page))
+
+    footer_text = f"{page_num} of {len(pages)}"
+    canvas.saveState()
+    canvas.setStrokeColorRGB(0, 0, 0)
+    canvas.setFont('Times-Roman', 10)
+    canvas.drawString(500, 30, footer_text)
+    canvas.restoreState()
+    canvas.showPage()
+canvas.save()
+
 fillpdfs.write_fillable_pdf('edited.pdf', 'final.pdf', dict_)
 # fillpdfs.print_form_fields('v2.pdf')
 
