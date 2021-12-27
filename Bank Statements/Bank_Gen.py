@@ -80,11 +80,10 @@ if len(sys.argv) == 2:
         Account_Details.append(begin_balance)
         Account_Details.append(end_balance)
 
-    Account_Details[8] = round(float(Account_Details[8]), 2)
-    Account_Details[9] = round(float(Account_Details[9]), 2)
 
-    print(Account_Details[8])
-    print(Account_Details[9])
+    Account_Details[8] = format(float(Account_Details[8]), ".2f")
+    Account_Details[9] = format(float(Account_Details[9]), ".2f")
+
 
     holder_info = f"{Account_Details[1][0]}\n{Account_Details[2]}\n{Account_Details[3]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
     if Account_Details[2] == None:
@@ -122,7 +121,7 @@ if len(sys.argv) == 2:
         running_sum += am
         descriptions.append(d)
         amounts.append(format(am,".2f"))
-        running_total.append(format(running_sum+Account_Details[8], ".2f"))
+        running_total.append(format(running_sum+float(Account_Details[8]), ".2f"))
 
         td = items['txn_date']
         td_month = td[0]+td[1]
