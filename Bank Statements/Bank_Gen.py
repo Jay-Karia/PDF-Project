@@ -1,201 +1,195 @@
 # Importing required modules
-from fillpdf import fillpdfs
-from PyPDF2 import PdfFileReader
-from reportlab.pdfgen.canvas import Canvas
-from pdfrw import PdfReader
-from pdfrw.toreportlab import makerl
-from pdfrw.buildxobj import pagexobj
-import json
-import sys
-import os
+from fillpdf import fillpdfs # populating the fields
+from PyPDF2 import PdfFileReader # getting the page numbers
+from PyPDF2 import PdfFileWriter
+from pdfrw import PdfReader # getting the x of n footer
+from pdfrw.buildxobj import pagexobj #  getting the x of n footer
+import json # getting the data
+import datetime # date range
+import sys # arguments
 
-# reading the json file
+param_month = ''
+statement_range = ''
+param_year = ''
+
+Input_PDF_file = "Template.pdf"
+Output_PDF_file = "Final bank statement.pdf"
+
+def FindStatementDateRange (String_Input_date):
+    global param_month
+    global param_year
+    global statement_range
+    '''
+    This function gets the range of date in words for the bank statement based on the input date in format DDMMYYYY
+    '''
+
+    param_year = String_Input_date[4]+String_Input_date[5]+String_Input_date[6]+String_Input_date[7]
+    param_month = String_Input_date[2]+String_Input_date[3]
+    param_date = String_Input_date[0]+String_Input_date[1]
+
+    DateTime_Input_date = datetime.datetime(int(param_year), int(param_month), int(param_date))
+
+    Another_Date = DateTime_Input_date.replace(day=28) + datetime.timedelta(days=31)
+
+    DateTime_Difference = Another_Date - datetime.timedelta(days=Another_Date.day)
+
+    last_date = str(DateTime_Difference.day)
+
+    start_date_str = datetime.datetime.strptime(String_Input_date,'%d%m%Y')
+    starting_date = start_date_str.strftime('%B %d, %Y')
+
+    month = starting_date.split(' ')[0]
+    year = starting_date.split(' ')[2]
+
+    ending_date = f"{month} {last_date}, {year}" 
+
+    statement_range = f"{starting_date} through {ending_date}"
+
+# Read the input JSON file
 with open('Bank_Statement_transactions.json') as file:
     data = json.load(file)
-    bank_name = data['response']['bank_accounts']['7942445']['bank_name']
 
-# all the keys requires to populate the pdf
+# Define all the keys required to populate the PDF
 keys = ['account_number', 'account_holders', 'holder_address_1', 'holder_address_2', 'holder_city', 'holder_state', 'holder_zip', 'account_type']
 
 # if the arguments are 2 then proceed
 if len(sys.argv) == 2:
     if len(sys.argv[1]) != 8:
-        print('The date format should be DDMMYYY')
+        print('The date format should be DDMMYYYY')
 
-    reader = PdfFileReader('v2.pdf')
-    fields = reader.getFormTextFields()
-    num_pages = reader.getNumPages()
-    raw_date = sys.argv[1]
-    # calculating the date from the parameter
-    param_year = ''
-    for index in range(4,8):
-        param_year += raw_date[index]
+    pypdf2_reader = PdfFileReader(Input_PDF_file)
+    num_pages = pypdf2_reader.getNumPages()
+    String_Input_date = sys.argv[1]
 
     # getting the start_date and end_date
-    if raw_date.startswith("01"):
-        # getting the date
-        date = raw_date[0]+raw_date[1]
-        #getting the month
-        param_month = raw_date[2]+raw_date[3]
-        new_month = ''
-        end_date = ''
-        if (param_month == "01"):
-            new_month = "January"
-            end_date = "31"+' '+new_month+', '+param_year
-        elif (param_month == "02"):
-            new_month = "February"
-            end_date = "28"+' '+new_month+', '+param_year
-        elif (param_month == "03"):
-            new_month = "March"
-            end_date = "31"+' '+new_month+', '+param_year
-        elif (param_month == "04"):
-            new_month = "April"
-            end_date = "30"+' '+new_month+', '+param_year
-        elif (param_month == "05"):
-            new_month = "May"
-            end_date = "31"+' '+new_month+', '+param_year
-        elif (param_month == "06"):
-            new_month = "June"
-            end_date = "30"+' '+new_month+', '+param_year
-        elif (param_month == "07"):
-            new_month = "July"
-            end_date = "31"+' '+new_month+', '+param_year
-        elif (param_month == "08"):
-            new_month = "August"
-            end_date = "31"+' '+new_month+', '+param_year
-        elif (param_month == "09"):
-            new_month = "September"
-            end_date = "30"+' '+new_month+', '+param_year
-        elif (param_month == "10"):
-            new_month = "October"
-            end_date = "31"+' '+new_month+', '+param_year
-        elif (param_month == "11"):
-            new_month = "November"
-            end_date = "30"+' '+new_month+', '+param_year
-        elif (param_month == "12"):
-            new_month = "December"
-            end_date = "31"+' '+new_month+', '+param_year
-        start_date = date+' '+new_month+', '+param_year
-        final_date = f'{start_date} through {end_date}'
-
+    if String_Input_date.startswith("01"):
+        FindStatementDateRange(String_Input_date)
     else:
         print("The Parameter date should be the first date of the month")
 
-values = []
+    Account_Details = []
 
-for index in range(0, len(keys)):
-    b_balance = account_number = data['response']['bank_accounts']['7942445'][keys[index]]
-    values.append(b_balance)
+    # Read account holder details
+    for index in range(0, len(keys)):
+        temp_value = data['response']['bank_accounts']['7942445'][keys[index]]
+        Account_Details.append(temp_value)
 
-for periods in data['response']['bank_accounts']['7942445']['periods']:
-    b_balance = periods['begin_balance']
-    e_balance = periods['end_balance']
-    values.append(b_balance)
-    values.append(e_balance)
+    for periods in data['response']['bank_accounts']['7942445']['periods']:
+        begin_balance = periods['begin_balance']
+        end_balance = periods['end_balance']
+        Account_Details.append(begin_balance)
+        Account_Details.append(end_balance)
 
-values[8] = float(values[8])
-values[9] = float(values[9])
+    Account_Details[8] = round(float(Account_Details[8]), 2)
+    Account_Details[9] = round(float(Account_Details[9]), 2)
 
-holder_info = f"{values[1][0]}\n{values[2]}\n{values[3]}\n{values[4]} {values[5]} {values[6]}"
-if values[2] == None:
-    holder_info = f"{values[1][0]}\n{values[3]}\n{values[4]} {values[5]} {values[6]}"
-elif values[3] == None:
-    holder_info = f"{values[1][0]}\n{values[2]}\n{values[4]} {values[5]} {values[6]}"
+    print(Account_Details[8])
+    print(Account_Details[9])
 
-positive_amounts = []
-sum_positive = 0.0
-sum_negative = 0.0
-negative_amounts = []
+    holder_info = f"{Account_Details[1][0]}\n{Account_Details[2]}\n{Account_Details[3]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
+    if Account_Details[2] == None:
+        holder_info = f"{Account_Details[1][0]}\n{Account_Details[3]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
+    elif Account_Details[3] == None:
+        holder_info = f"{Account_Details[1][0]}\n{Account_Details[2]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
 
-for amount in data['response']['txns']:
-    a = amount['amount']
-    if '-' not in a:
-        a = float(a)
-        positive_amounts.append(a)
-        sum_positive= round(sum_positive + a, 2)
-    elif '-' in a:
-        a = float(a)
-        negative_amounts.append(a)
-        sum_negative= round(sum_negative + a, 2)
+    #  Calculate running total 
+    positive_amounts = []
+    sum_positive = 0.0
+    sum_negative = 0.0
+    negative_amounts = []
 
-descriptions = []
-amounts = []
-running_total = []
-running_sum = 0.0
-adj_txn_dates = []
+    for amount in data['response']['txns']:
+        a = amount['amount']
+        if '-' not in a:
+            a = float(a)
+            positive_amounts.append(a)
+            sum_positive= round(sum_positive + a, 2)
+        elif '-' in a:
+            a = float(a)
+            negative_amounts.append(a)
+            sum_negative= round(sum_negative + a, 2)
 
-for items in data['response']['txns']:
-    d = items['description']
-    am = float(items['amount'])
-    running_sum += am
-    descriptions.append(d)
-    amounts.append(am)
-    running_total.append(running_sum+values[8])
+    descriptions = []
+    amounts = []
+    running_total = [] # numeric - doing
+    running_sum = 0.0
+    adj_txn_dates = []
 
-    td = items['txn_date']
-    td_month = td[0]+td[1]
-    td_year = td[6]+td[7]+td[8]+td[9]
-    td = td.replace(td_month, param_month)
-    td = td.replace('/'+td_year, '')
-    adj_txn_dates.append(td)
+    for items in data['response']['txns']:
+        d = items['description']
+        am = float(items['amount'])
 
-new_dict = {}
-for index in range(0, len(data['response']['txns'])):
-    
-    new_dict[f"date_{index}"] = adj_txn_dates[index]
-    new_dict[f"amount_{index}"] = amounts[index]
-    new_dict[f"description_{index}"] = descriptions[index]
-    new_dict[f"running_total_{index}"] = running_total[index]
+        running_sum += am
+        descriptions.append(d)
+        amounts.append(format(am,".2f"))
+        running_total.append(format(running_sum+Account_Details[8], ".2f"))
 
-    fillpdfs.write_fillable_pdf('v2.pdf', 'edited.pdf', new_dict)
+        td = items['txn_date']
+        td_month = td[0]+td[1]
+        td_year = td[6]+td[7]+td[8]+td[9]
+        td = td.replace(td_month, param_month)
+        td = td.replace('/'+td_year, '')
+        adj_txn_dates.append(td)
+
+    new_dict = {}
+    for index in range(0, len(data['response']['txns'])):
+        new_dict[f"date_{index}"] = adj_txn_dates[index]
+        new_dict[f"amount_{index}"] = amounts[index]
+        new_dict[f"description_{index}"] = descriptions[index]
+        new_dict[f"running_total_{index}"] = running_total[index]
+        
+        # Write txn details to PDF
+        fillpdfs.write_fillable_pdf(Input_PDF_file, Output_PDF_file, new_dict) 
+
+
+# populating the text fields (holder)
+dict_ = {
+    'period_input': statement_range,
+    'account_number': Account_Details[0],
+
+    'holder_info': holder_info,
+
+    'begin_balance': Account_Details[8],
+    'end_balance': Account_Details[9],
+    'deposits': sum_positive,
+    'withdrawals': sum_negative,
+    'account_type': Account_Details[7],
+}
+
+# Write holder details to PDF
+fillpdfs.write_fillable_pdf(Output_PDF_file, Output_PDF_file, dict_) #holder details
+# adding page numbers
 
 
 def add_new_transactions_page():
     '''Adds a new page for transactions details'''
     print("More than 7 transactions")
+    copy_reader = PdfFileReader(Output_PDF_file)
+    page_1 = copy_reader.getPage(0)
+    page_2 = copy_reader.getPage(1)
+    writer = PdfFileWriter()
+    writer.addPage(page_1)
+    writer.addPage(page_1)
+    writer.addPage(page_2)
+    # writer.appendPagesFromReader(copy_reader)
+    # writer.insertPage(page_1, 0)
+    # writer.insertPage(page_1, 1)
+    # writer.insertPage(page_2, 2)
+
+    with open(Output_PDF_file, 'wb') as output:
+        writer.write(output)
 
 total_txns = len(data['response']['txns'])
+total_txns = 8
 if total_txns > 7:
-    add_new_transactions_page()
+    # add_new_transactions_page()
+    pass
 
-# populating the fields
-dict_ = {
-    'period_input': final_date,
-    'account_number': values[0],
-
-    'holder_info': holder_info,
-
-    'begin_balance': values[8],
-    'end_balance': values[9],
-    'deposits': sum_positive,
-    'withdrawals': sum_negative,
-    'account_type': values[7],
-
-}
-
-reader = PdfReader("edited.pdf")
+page_dict = {}
+reader = PdfReader(Output_PDF_file)
 pages = [pagexobj(p) for p in reader.pages]
 
-canvas = Canvas("edited.pdf")
-
 for page_num, page in enumerate(pages, start=1):
-    canvas.doForm(makerl(canvas, page))
-
-    footer_text = f"{page_num} of {len(pages)}"
-    canvas.saveState()
-    canvas.setStrokeColorRGB(0, 0, 0)
-    canvas.setFont('Times-Roman', 10)
-    canvas.drawString(500, 30, footer_text)
-    canvas.restoreState()
-    canvas.showPage()
-canvas.save()
-
-fillpdfs.write_fillable_pdf('edited.pdf', 'final.pdf', dict_)
-# fillpdfs.print_form_fields('v2.pdf')
-
-# Parameter = file_name, DDMMYYYY
-
-# Transactions could go over multiple pages, so ending balance should be on last page
-# We will need a running balance for transactions
-# Page x of n footer should be posted based on final page
-# So JSON transaction date 10/15/21 with parameter date 01022020 leads to a PDF transaction output date of 02/15/20
+    # fillpdfs.print_form_fields(Output_PDF_file)
+    page_dict[f"page_{page_num}"] = f"Page {page_num} of {len(pages)}"
+    fillpdfs.write_fillable_pdf(Output_PDF_file, Output_PDF_file, page_dict)
