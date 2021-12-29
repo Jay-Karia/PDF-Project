@@ -2,6 +2,7 @@
 import io
 import fitz
 from fitz.fitz import Widget
+import textwrap
 import pdfrw
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfFileReader # getting the page numbers
@@ -169,41 +170,45 @@ description_x = 100
 running_x = 500
 amount_x = 430
 
-# description = "fsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f "
+description = "fsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f fsd fsd af fsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f fsd fsd affsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f fsd fsd affsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f fsd fsd af"
 
-# def run():
-#     canvas_data = get_overlay_canvas()
-#     form = merge(canvas_data, template_path=Input_PDF_file)
-#     save(form, filename=Output_PDF_file)
+def run():
+    canvas_data = get_overlay_canvas()
+    form = merge(canvas_data, template_path=Input_PDF_file)
+    save(form, filename=Output_PDF_file)
 
-# def get_overlay_canvas() -> io.BytesIO:
-#     data = io.BytesIO()
-#     pdf = canvas.Canvas(data)
-#     # date
-#     # for i in range(0, len(adj_txn_dates)):
-#     pdf.drawString(x=amount_x, y=y, text="amount")
-#     pdf.drawString(x=running_x, y=y, text="running")
-#     pdf.drawString(x=date_x, y=y, text="date")
-#     pdf.drawString(x=description_x, y=y, text="")
+def get_overlay_canvas() -> io.BytesIO:
+    global description
+    data = io.BytesIO()
+    pdf = canvas.Canvas(data)
+    # date
+    # for i in range(0, len(adj_txn_dates)):
+    pdf.drawString(x=amount_x, y=y, text="amount")
+    pdf.drawString(x=running_x, y=y, text="running")
+    pdf.drawString(x=date_x, y=y, text="date")
+    if len(description)>60:
+        description =  textwrap.shorten(description, width=60)
+    pdf.drawString(x=description_x, y=y, text=description)
+    pdf.drawString(x=date_x, y=155, text="_______________________________________________________________________________________________")
 
-#     pdf.save()
-#     data.seek(0)
-#     return data
+    pdf.save()
+    data.seek(0)
+    return data
 
-# def merge(overlay_canvas: io.BytesIO, template_path: str) -> io.BytesIO:
-#     template_pdf = pdfrw.PdfReader(template_path)
-#     overlay_pdf = pdfrw.PdfReader(overlay_canvas)
-#     for page, data in zip(template_pdf.pages, overlay_pdf.pages):
-#         overlay = pdfrw.PageMerge().add(data)[0]
-#         pdfrw.PageMerge(page).add(overlay).render()
-#     form = io.BytesIO()
-#     pdfrw.PdfWriter().write(form, template_pdf)
-#     form.seek(0)
-#     return form
+def merge(overlay_canvas: io.BytesIO, template_path: str) -> io.BytesIO:
+    template_pdf = pdfrw.PdfReader(template_path)
+    overlay_pdf = pdfrw.PdfReader(overlay_canvas)
+    for page, data in zip(template_pdf.pages, overlay_pdf.pages):
+        overlay = pdfrw.PageMerge().add(data)[0]
+        pdfrw.PageMerge(page).add(overlay).render()
+    form = io.BytesIO()
+    pdfrw.PdfWriter().write(form, template_pdf)
+    form.seek(0)
+    return form
 
 
-# def save(form: io.BytesIO, filename: str):
-#     with open(filename, 'wb') as f:
-#         f.write(form.read())
+def save(form: io.BytesIO, filename: str):
+    with open(filename, 'wb') as f:
+        f.write(form.read())
 
-# run()
+run()
