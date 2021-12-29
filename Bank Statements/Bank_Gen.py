@@ -1,9 +1,10 @@
 # Importing required modules
-from fillpdf import fillpdfs # populating the fields
+import io
+import fitz
+from fitz.fitz import Widget
+import pdfrw
+from reportlab.pdfgen import canvas
 from PyPDF2 import PdfFileReader # getting the page numbers
-from PyPDF2 import PdfFileWriter
-from pdfrw import PdfReader # getting the x of n footer
-from pdfrw.buildxobj import pagexobj #  getting the x of n footer
 import json # getting the data
 import datetime # date range
 import sys # arguments
@@ -44,6 +45,8 @@ def FindStatementDateRange (String_Input_date):
     ending_date = f"{month} {last_date}, {year}" 
 
     statement_range = f"{starting_date} through {ending_date}"
+
+
 
 # Read the input JSON file
 with open('Bank_Statement_transactions.json') as file:
@@ -138,7 +141,7 @@ if len(sys.argv) == 2:
         new_dict[f"running_total_{index}"] = running_total[index]
         
         # Write txn details to PDF
-        fillpdfs.write_fillable_pdf(Input_PDF_file, Output_PDF_file, new_dict) 
+        # fillpdfs.write_fillable_pdf(Input_PDF_file, Output_PDF_file, new_dict) 
 
 
 # populating the text fields (holder)
@@ -156,39 +159,51 @@ dict_ = {
 }
 
 # Write holder details to PDF
-fillpdfs.write_fillable_pdf(Output_PDF_file, Output_PDF_file, dict_) #holder details
-# adding page numbers
+# fillpdfs.write_fillable_pdf(Output_PDF_file, Output_PDF_file, dict_) #holder details
+
+# X-Y Writing
+y = 160
+
+date_x = 35
+description_x = 100
+running_x = 500
+amount_x = 430
+
+# description = "fsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f "
+
+# def run():
+#     canvas_data = get_overlay_canvas()
+#     form = merge(canvas_data, template_path=Input_PDF_file)
+#     save(form, filename=Output_PDF_file)
+
+# def get_overlay_canvas() -> io.BytesIO:
+#     data = io.BytesIO()
+#     pdf = canvas.Canvas(data)
+#     # date
+#     # for i in range(0, len(adj_txn_dates)):
+#     pdf.drawString(x=amount_x, y=y, text="amount")
+#     pdf.drawString(x=running_x, y=y, text="running")
+#     pdf.drawString(x=date_x, y=y, text="date")
+#     pdf.drawString(x=description_x, y=y, text="")
+
+#     pdf.save()
+#     data.seek(0)
+#     return data
+
+# def merge(overlay_canvas: io.BytesIO, template_path: str) -> io.BytesIO:
+#     template_pdf = pdfrw.PdfReader(template_path)
+#     overlay_pdf = pdfrw.PdfReader(overlay_canvas)
+#     for page, data in zip(template_pdf.pages, overlay_pdf.pages):
+#         overlay = pdfrw.PageMerge().add(data)[0]
+#         pdfrw.PageMerge(page).add(overlay).render()
+#     form = io.BytesIO()
+#     pdfrw.PdfWriter().write(form, template_pdf)
+#     form.seek(0)
+#     return form
 
 
-def add_new_transactions_page():
-    '''Adds a new page for transactions details'''
-    print("More than 7 transactions")
-    copy_reader = PdfFileReader(Output_PDF_file)
-    page_1 = copy_reader.getPage(0)
-    page_2 = copy_reader.getPage(1)
-    writer = PdfFileWriter()
-    writer.addPage(page_1)
-    writer.addPage(page_1)
-    writer.addPage(page_2)
-    # writer.appendPagesFromReader(copy_reader)
-    # writer.insertPage(page_1, 0)
-    # writer.insertPage(page_1, 1)
-    # writer.insertPage(page_2, 2)
+# def save(form: io.BytesIO, filename: str):
+#     with open(filename, 'wb') as f:
+#         f.write(form.read())
 
-    with open(Output_PDF_file, 'wb') as output:
-        writer.write(output)
-
-total_txns = len(data['response']['txns'])
-total_txns = 8
-if total_txns > 7:
-    # add_new_transactions_page()
-    pass
-
-page_dict = {}
-reader = PdfReader(Output_PDF_file)
-pages = [pagexobj(p) for p in reader.pages]
-
-for page_num, page in enumerate(pages, start=1):
-    # fillpdfs.print_form_fields(Output_PDF_file)
-    page_dict[f"page_{page_num}"] = f"Page {page_num} of {len(pages)}"
-    fillpdfs.write_fillable_pdf(Output_PDF_file, Output_PDF_file, page_dict)
+# run()
