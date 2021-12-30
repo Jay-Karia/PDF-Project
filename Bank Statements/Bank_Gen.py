@@ -74,11 +74,15 @@ if len(sys.argv) == 2:
     Account_Details = []
 
     # Read account holder details
+    pk = ''
+    for index in data['response']['bank_accounts']:
+        pk = index
+
     for index in range(0, len(keys)):
-        temp_value = data['response']['bank_accounts']['7942445'][keys[index]]
+        temp_value = data['response']['bank_accounts'][pk][keys[index]]
         Account_Details.append(temp_value)
 
-    for periods in data['response']['bank_accounts']['7942445']['periods']:
+    for periods in data['response']['bank_accounts'][pk]['periods']:
         begin_balance = periods['begin_balance']
         end_balance = periods['end_balance']
         Account_Details.append(begin_balance)
@@ -118,16 +122,16 @@ if len(sys.argv) == 2:
     running_sum = 0.0
     adj_txn_dates = []
 
-    for items in data['response']['txns']:
-        d = items['description']
-        am = float(items['amount'])
+    for index in data['response']['txns']:
+        d = index['description']
+        am = float(index['amount'])
 
         running_sum += am
         descriptions.append(d)
         amounts.append(format(am,".2f"))
         running_total.append(format(running_sum+float(Account_Details[8]), ".2f"))
 
-        td = items['txn_date']
+        td = index['txn_date']
         td_month = td[0]+td[1]
         td_year = td[6]+td[7]+td[8]+td[9]
         td = td.replace(td_month, param_month)
