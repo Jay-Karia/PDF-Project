@@ -50,7 +50,7 @@ def FindStatementDateRange (String_Input_date):
 
 
 # Read the input JSON file
-with open('Bank_Statement_transactions.json') as file:
+with open('Bank_Statement_transactions_v2.json') as file:
     data = json.load(file)
 
 # Define all the keys required to populate the PDF
@@ -75,14 +75,14 @@ if len(sys.argv) == 2:
 
     # Read account holder details
     pk = ''
-    for index in data['response']['bank_accounts']:
+    for index in data['bank_accounts']:
         pk = index
 
     for index in range(0, len(keys)):
-        temp_value = data['response']['bank_accounts'][pk][keys[index]]
+        temp_value = data['bank_accounts'][pk][keys[index]]
         Account_Details.append(temp_value)
 
-    for periods in data['response']['bank_accounts'][pk]['periods']:
+    for periods in data['bank_accounts'][pk]['periods']:
         begin_balance = periods['begin_balance']
         end_balance = periods['end_balance']
         Account_Details.append(begin_balance)
@@ -105,7 +105,7 @@ if len(sys.argv) == 2:
     sum_negative = 0.0
     negative_amounts = []
 
-    for amount in data['response']['txns']:
+    for amount in data['txns']:
         a = amount['amount']
         if '-' not in a:
             a = float(a)
@@ -122,7 +122,7 @@ if len(sys.argv) == 2:
     running_sum = 0.0
     adj_txn_dates = []
 
-    for index in data['response']['txns']:
+    for index in data['txns']:
         d = index['description']
         am = float(index['amount'])
 
@@ -139,7 +139,7 @@ if len(sys.argv) == 2:
         adj_txn_dates.append(td)
 
     new_dict = {}
-    for index in range(0, len(data['response']['txns'])):
+    for index in range(0, len(data['txns'])):
         new_dict[f"date_{index}"] = adj_txn_dates[index]
         new_dict[f"amount_{index}"] = amounts[index]
         new_dict[f"description_{index}"] = descriptions[index]
@@ -174,6 +174,9 @@ description_x = 100
 running_x = 500
 amount_x = 430
 
+line_y = 195
+line_x = 0
+
 def run():
     canvas_data = get_overlay_canvas()
     form = merge(canvas_data, template_path=Input_PDF_file)
@@ -184,9 +187,9 @@ def get_overlay_canvas() -> io.BytesIO:
     data = io.BytesIO()
     pdf = canvas.Canvas(data)
     j = 0
-    for i in range(0, len(amounts)):
-        if len(descriptions[i])>60:
-            descriptions[i] =  textwrap.shorten(descriptions[i], width=60)
+    for i in range(0, 7):
+        if len(descriptions[i])>45:
+            descriptions[i] =  textwrap.shorten(descriptions[i], width=45)
         if descriptions[0] == descriptions[i] and adj_txn_dates[0] == adj_txn_dates[i] and amounts[0] == amounts[i] and running_total[0] == running_total[i]:
             pdf.drawString(x=date_x, y=y, text=adj_txn_dates[i])
             pdf.drawString(x=description_x, y=y, text=descriptions[i])
@@ -200,8 +203,12 @@ def get_overlay_canvas() -> io.BytesIO:
             pdf.drawString(x=amount_x, y=y-j, text=f"{amounts[i]}")
             pdf.drawString(x=running_x, y=y-j, text=running_total[i])
 
-
-    # pdf.drawString(x=date_x, y=155,text="_______________________________________________________________________________________________")
+    g=0
+    for i in range(0, 8):
+        g+= 20
+        g+=1
+        pdf.drawString(x=line_x, y=line_y-g,text="_______________________________________________________________________________________________")
+        
 
     pdf.save()
     data.seek(0)
