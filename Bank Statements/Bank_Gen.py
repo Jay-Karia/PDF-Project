@@ -185,14 +185,21 @@ def get_overlay_canvas() -> io.BytesIO:
     pdf = canvas.Canvas(data)
     j = 0
     for i in range(0, len(amounts)):
-        j+= 20
-        j+=1
         if len(descriptions[i])>60:
             descriptions[i] =  textwrap.shorten(descriptions[i], width=60)
-        pdf.drawString(x=description_x, y=y-j, text=descriptions[i])
-        pdf.drawString(x=amount_x, y=y-j, text=amounts[i])
-        pdf.drawString(x=running_x, y=y-j, text=running_total[i])
-        pdf.drawString(x=date_x, y=y-j, text=adj_txn_dates[i])
+        if descriptions[0] == descriptions[i] and adj_txn_dates[0] == adj_txn_dates[i] and amounts[0] == amounts[i] and running_total[0] == running_total[i]:
+            pdf.drawString(x=date_x, y=y, text=adj_txn_dates[i])
+            pdf.drawString(x=description_x, y=y, text=descriptions[i])
+            pdf.drawString(x=amount_x, y=y, text=f"{amounts[i]}")
+            pdf.drawString(x=running_x, y=y, text=running_total[i])
+        else:
+            j+= 20
+            j+=1
+            pdf.drawString(x=date_x, y=y-j, text=adj_txn_dates[i])
+            pdf.drawString(x=description_x, y=y-j, text=descriptions[i])
+            pdf.drawString(x=amount_x, y=y-j, text=f"{amounts[i]}")
+            pdf.drawString(x=running_x, y=y-j, text=running_total[i])
+
 
     # pdf.drawString(x=date_x, y=155,text="_______________________________________________________________________________________________")
 
