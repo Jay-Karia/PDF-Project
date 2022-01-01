@@ -174,8 +174,6 @@ description_x = 100
 running_x = 500
 amount_x = 430
 
-description = "fsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f fsd fsd af fsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f fsd fsd affsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f fsd fsd affsd fsd af df sd fsad f asdf sd fsd fs daf asdf s df as df asdf asd fas df sad fasd f adf f fsd fsd af"
-
 def run():
     canvas_data = get_overlay_canvas()
     form = merge(canvas_data, template_path=Input_PDF_file)
@@ -185,15 +183,18 @@ def get_overlay_canvas() -> io.BytesIO:
     global description
     data = io.BytesIO()
     pdf = canvas.Canvas(data)
-    # date
-    # for i in range(0, len(adj_txn_dates)):
-    pdf.drawString(x=amount_x, y=y, text="amount")
-    pdf.drawString(x=running_x, y=y, text="running")
-    pdf.drawString(x=date_x, y=y, text="date")
-    if len(description)>60:
-        description =  textwrap.shorten(description, width=60)
-    pdf.drawString(x=description_x, y=y, text=description)
-    pdf.drawString(x=date_x, y=155, text="_______________________________________________________________________________________________")
+    j = 0
+    for i in range(0, len(amounts)):
+        j+= 20
+        j+=1
+        if len(descriptions[i])>60:
+            descriptions[i] =  textwrap.shorten(descriptions[i], width=60)
+        pdf.drawString(x=description_x, y=y-j, text=descriptions[i])
+        pdf.drawString(x=amount_x, y=y-j, text=amounts[i])
+        pdf.drawString(x=running_x, y=y-j, text=running_total[i])
+        pdf.drawString(x=date_x, y=y-j, text=adj_txn_dates[i])
+
+    # pdf.drawString(x=date_x, y=155,text="_______________________________________________________________________________________________")
 
     pdf.save()
     data.seek(0)
