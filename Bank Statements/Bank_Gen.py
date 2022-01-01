@@ -1,7 +1,7 @@
 # Importing required modules
 import io
 import fitz
-from fitz.fitz import Widget
+from fitz.fitz import Widget 
 import textwrap
 import pdfrw
 from reportlab.pdfgen import canvas
@@ -196,15 +196,15 @@ def get_overlay_canvas() -> io.BytesIO:
             if descriptions[0] == descriptions[i] and adj_txn_dates[0] == adj_txn_dates[i] and amounts[0] == amounts[i] and running_total[0] == running_total[i]:
                 pdf.drawString(x=date_x, y=y, text=adj_txn_dates[i])
                 pdf.drawString(x=description_x, y=y, text=descriptions[i])
-                pdf.drawString(x=amount_x, y=y, text=f"{amounts[i]}")
-                pdf.drawString(x=running_x, y=y, text=running_total[i])
+                pdf.drawString(x=amount_x, y=y, text="{:,.2f}".format(float(amounts[i])))
+                pdf.drawString(x=running_x, y=y, text="{:,.2f}".format(float(running_total[i])))
             else:
                 j+= 20
                 j+=1
                 pdf.drawString(x=date_x, y=y-j, text=adj_txn_dates[i])
                 pdf.drawString(x=description_x, y=y-j, text=descriptions[i])
-                pdf.drawString(x=amount_x, y=y-j, text=f"{amounts[i]}")
-                pdf.drawString(x=running_x, y=y-j, text=running_total[i])
+                pdf.drawString(x=amount_x, y=y-j, text="{:,.2f}".format(float(amounts[i])))
+                pdf.drawString(x=running_x, y=y-j, text="{:,.2f}".format(float(running_total[i])))
 
         except:
             pass
@@ -214,7 +214,6 @@ def get_overlay_canvas() -> io.BytesIO:
         g+= 20
         g+=1
         pdf.drawString(x=line_x, y=line_y-g,text="_______________________________________________________________________________________________") 
-        
 
     pdf.save()
     data.seek(0)
