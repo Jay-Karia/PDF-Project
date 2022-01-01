@@ -166,6 +166,8 @@ dict_ = {
 # Write holder details to PDF
 # fillpdfs.write_fillable_pdf(Output_PDF_file, Output_PDF_file, dict_) #holder details
 
+total_txns = len(data['txns'])
+
 # X-Y Writing
 y = 160
 
@@ -188,26 +190,30 @@ def get_overlay_canvas() -> io.BytesIO:
     pdf = canvas.Canvas(data)
     j = 0
     for i in range(0, 7):
-        if len(descriptions[i])>45:
-            descriptions[i] =  textwrap.shorten(descriptions[i], width=45)
-        if descriptions[0] == descriptions[i] and adj_txn_dates[0] == adj_txn_dates[i] and amounts[0] == amounts[i] and running_total[0] == running_total[i]:
-            pdf.drawString(x=date_x, y=y, text=adj_txn_dates[i])
-            pdf.drawString(x=description_x, y=y, text=descriptions[i])
-            pdf.drawString(x=amount_x, y=y, text=f"{amounts[i]}")
-            pdf.drawString(x=running_x, y=y, text=running_total[i])
-        else:
-            j+= 20
-            j+=1
-            pdf.drawString(x=date_x, y=y-j, text=adj_txn_dates[i])
-            pdf.drawString(x=description_x, y=y-j, text=descriptions[i])
-            pdf.drawString(x=amount_x, y=y-j, text=f"{amounts[i]}")
-            pdf.drawString(x=running_x, y=y-j, text=running_total[i])
+        try:
+            if len(descriptions[i])>45:
+                descriptions[i] =  textwrap.shorten(descriptions[i], width=45)
+            if descriptions[0] == descriptions[i] and adj_txn_dates[0] == adj_txn_dates[i] and amounts[0] == amounts[i] and running_total[0] == running_total[i]:
+                pdf.drawString(x=date_x, y=y, text=adj_txn_dates[i])
+                pdf.drawString(x=description_x, y=y, text=descriptions[i])
+                pdf.drawString(x=amount_x, y=y, text=f"{amounts[i]}")
+                pdf.drawString(x=running_x, y=y, text=running_total[i])
+            else:
+                j+= 20
+                j+=1
+                pdf.drawString(x=date_x, y=y-j, text=adj_txn_dates[i])
+                pdf.drawString(x=description_x, y=y-j, text=descriptions[i])
+                pdf.drawString(x=amount_x, y=y-j, text=f"{amounts[i]}")
+                pdf.drawString(x=running_x, y=y-j, text=running_total[i])
 
-    g=0
-    for i in range(0, 8):
+        except:
+            pass
+
+    g = 0
+    for i in range(0, total_txns+1):
         g+= 20
         g+=1
-        pdf.drawString(x=line_x, y=line_y-g,text="_______________________________________________________________________________________________")
+        pdf.drawString(x=line_x, y=line_y-g,text="_______________________________________________________________________________________________") 
         
 
     pdf.save()
