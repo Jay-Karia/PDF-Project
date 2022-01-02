@@ -98,9 +98,6 @@ for periods in data['bank_accounts'][pk]['periods']:
 Account_Details[8] = format(float(Account_Details[8]), ".2f")
 Account_Details[9] = format(float(Account_Details[9]), ".2f")
 
-#  Calculate running total 
-    #  Calculate running total 
-#  Calculate running total 
 positive_amounts = []
 sum_positive = 0.0
 sum_negative = 0.0
@@ -204,6 +201,7 @@ def populate_txn_details(txn_index_start, txn_index_end, start_x:int, start_y:in
         end_balance_value_y = end_balance_y
         pdf.drawRightString(x=end_balance_value_x, y=end_balance_value_y, text="$"+"{:,}".format(float(Account_Details[9])))
 
+
     pdf.save()
     data.seek(0)
     return data
@@ -227,7 +225,7 @@ def insertPages():
     writer = PdfFileWriter()
     reader = PdfFileReader(open(Input_PDF_file, 'rb'))
     writer.insertPage(reader.getPage(0), 0)
-    # writer.insertPage(reader.getPage(1), 1)
+
     i = 0
     for i in range(7, total_txns, txn_per_pages):
         writer.insertPage(reader.getPage(1), i)
@@ -299,6 +297,8 @@ def insertPageNumbersAndAccountNumberAndHolderDetails():
             end_balance_value_x = date_x+505
             end_balance_value_y = end_balance_y
             canvas.drawRightString(x=end_balance_value_x, y=end_balance_value_y, text="$"+"{:,}".format(float(Account_Details[9])))
+            
+            canvas.drawImage('Footer_image.jpg', x=0, y=25 ,width=595, height=300)
 
     canvas.save()
 
