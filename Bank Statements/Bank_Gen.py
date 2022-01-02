@@ -1,7 +1,5 @@
 # Importing required modules
 import io
-import fitz
-from fitz.fitz import Widget 
 import textwrap
 import pdfrw
 from reportlab.pdfgen import canvas
@@ -57,96 +55,101 @@ with open('Bank_Statement_transactions_v2.json') as file:
 keys = ['account_number', 'account_holders', 'holder_address_1', 'holder_address_2', 'holder_city', 'holder_state', 'holder_zip', 'account_type']
 
 # if the arguments are 2 then proceed
-if len(sys.argv) == 2:
-    if len(sys.argv[1]) != 8:
-        print('The date format should be DDMMYYYY')
+# if len(sys.argv) == 2:
+#     if len(sys.argv[1]) != 8:
+#         print('The date format should be DDMMYYYY')
 
-    pypdf2_reader = PdfFileReader(Input_PDF_file)
-    num_pages = pypdf2_reader.getNumPages()
-    String_Input_date = sys.argv[1]
+pypdf2_reader = PdfFileReader(Input_PDF_file)
+num_pages = pypdf2_reader.getNumPages()
+# String_Input_date = sys.argv[1]
+String_Input_date = '01012022'
 
-    # getting the start_date and end_date
-    if String_Input_date.startswith("01"):
-        FindStatementDateRange(String_Input_date)
-    else:
-        print("The Parameter date should be the first date of the month")
+# getting the start_date and end_date
+if String_Input_date.startswith("01"):
+    FindStatementDateRange(String_Input_date)
+else:
+    print("The Parameter date should be the first date of the month")
 
-    Account_Details = []
+Account_Details = []
 
-    # Read account holder details
-    pk = ''
-    for index in data['bank_accounts']:
-        pk = index
+# Read account holder details
+pk = ''
+for index in data['bank_accounts']:
+    pk = index
 
-    for index in range(0, len(keys)):
-        temp_value = data['bank_accounts'][pk][keys[index]]
-        Account_Details.append(temp_value)
+for index in range(0, len(keys)):
+    temp_value = data['bank_accounts'][pk][keys[index]]
+    Account_Details.append(temp_value)
 
-    for periods in data['bank_accounts'][pk]['periods']:
-        begin_balance = periods['begin_balance']
-        end_balance = periods['end_balance']
-        Account_Details.append(begin_balance)
-        Account_Details.append(end_balance)
-
-
-    Account_Details[8] = format(float(Account_Details[8]), ".2f")
-    Account_Details[9] = format(float(Account_Details[9]), ".2f")
+for periods in data['bank_accounts'][pk]['periods']:
+    begin_balance = periods['begin_balance']
+    end_balance = periods['end_balance']
+    Account_Details.append(begin_balance)
+    Account_Details.append(end_balance)
 
 
-    holder_info = f"{Account_Details[1][0]}\n{Account_Details[2]}\n{Account_Details[3]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
-    if Account_Details[2] == None:
-        holder_info = f"{Account_Details[1][0]}\n{Account_Details[3]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
-    elif Account_Details[3] == None:
-        holder_info = f"{Account_Details[1][0]}\n{Account_Details[2]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
+Account_Details[8] = format(float(Account_Details[8]), ".2f")
+Account_Details[9] = format(float(Account_Details[9]), ".2f")
 
+
+holder_info = f"{Account_Details[1][0]}\n{Account_Details[2]}\n{Account_Details[3]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
+if Account_Details[2] == None:
+    holder_info = f"{Account_Details[1][0]}\n{Account_Details[3]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
+elif Account_Details[3] == None:
+    holder_info = f"{Account_Details[1][0]}\n{Account_Details[2]}\n{Account_Details[4]} {Account_Details[5]} {Account_Details[6]}"
+
+#  Calculate running total 
     #  Calculate running total 
-    positive_amounts = []
-    sum_positive = 0.0
-    sum_negative = 0.0
-    negative_amounts = []
+#  Calculate running total 
+positive_amounts = []
+sum_positive = 0.0
+sum_negative = 0.0
+negative_amounts = []
 
-    for amount in data['txns']:
-        a = amount['amount']
-        if '-' not in a:
-            a = float(a)
-            positive_amounts.append(a)
-            sum_positive= round(sum_positive + a, 2)
-        elif '-' in a:
-            a = float(a)
-            negative_amounts.append(a)
-            sum_negative= round(sum_negative + a, 2)
+for amount in data['txns']:
+    a = amount['amount']
+    if '-' not in a:
+        a = float(a)
+        positive_amounts.append(a)
+        sum_positive= round(sum_positive + a, 2)
+    elif '-' in a:
+        a = float(a)
+        negative_amounts.append(a)
+        sum_negative= round(sum_negative + a, 2)
 
-    descriptions = []
-    amounts = []
-    running_total = [] # numeric - doing
-    running_sum = 0.0
-    adj_txn_dates = []
+descriptions = []
+amounts = []
+running_total = [] # numeric - doing
+running_sum = 0.0
+adj_txn_dates = []
 
-    for index in data['txns']:
-        d = index['description']
-        am = float(index['amount'])
+for index in data['txns']:
+    d = index['description']
+    am = float(index['amount'])
 
-        running_sum += am
-        descriptions.append(d)
-        amounts.append(format(am,".2f"))
-        running_total.append(format(running_sum+float(Account_Details[8]), ".2f"))
+    running_sum += am
+    descriptions.append(d)
+    amounts.append(format(am,".2f"))
+    running_total.append(format(running_sum+float(Account_Details[8]), ".2f"))
 
-        td = index['txn_date']
-        td_month = td[0]+td[1]
-        td_year = td[6]+td[7]+td[8]+td[9]
-        td = td.replace(td_month, param_month)
-        td = td.replace('/'+td_year, '')
-        adj_txn_dates.append(td)
+    td = index['txn_date']
+    td_month = td[0]+td[1]
+    td_year = td[6]+td[7]+td[8]+td[9]
+    td = td.replace(td_month, param_month)
+    td = td.replace('/'+td_year, '')
+    adj_txn_dates.append(td)
 
-    new_dict = {}
-    for index in range(0, len(data['txns'])):
-        new_dict[f"date_{index}"] = adj_txn_dates[index]
-        new_dict[f"amount_{index}"] = amounts[index]
-        new_dict[f"description_{index}"] = descriptions[index]
-        new_dict[f"running_total_{index}"] = running_total[index]
-        
-        # Write txn details to PDF
+new_dict = {}
+for index in range(0, len(data['txns'])):
+    new_dict[f"date_{index}"] = adj_txn_dates[index]
+    new_dict[f"amount_{index}"] = amounts[index]
+    new_dict[f"description_{index}"] = descriptions[index]
+    new_dict[f"running_total_{index}"] = running_total[index]
+    
+    # Write txn details to PDF
+    # fillpdfs.write_fillable_pdf(Input_PDF_file, Output_PDF_file, new_dict) 
         # fillpdfs.write_fillable_pdf(Input_PDF_file, Output_PDF_file, new_dict) 
+    # fillpdfs.write_fillable_pdf(Input_PDF_file, Output_PDF_file, new_dict) 
 
 
 # populating the text fields (holder)
@@ -167,53 +170,58 @@ dict_ = {
 # fillpdfs.write_fillable_pdf(Output_PDF_file, Output_PDF_file, dict_) #holder details
 
 total_txns = len(data['txns'])
+counter = 0
 
 # X-Y Writing
 y = 160
-
 date_x = 35
-description_x = 100
-running_x = 500
-amount_x = 430
 
-line_y = 195
-line_x = 0
-
-def run():
-    canvas_data = get_overlay_canvas()
+def print_txn_details():
+    # Print first page
+    canvas_data = populate_txn_details(0, 7, date_x, y)
     form = merge(canvas_data, template_path=Input_PDF_file)
-    save(form, filename=Output_PDF_file)
+    # Print txn detail pages
+    # if total_txns>7:
+    #     for i in range(8, 28):
+    #         canvas_data = populate_txn_details(8, 28, date_x, y)
+    #         form = merge(canvas_data, template_path=Input_PDF_file)
 
-def get_overlay_canvas() -> io.BytesIO:
+    save(form, filename=Output_PDF_file)
+    # save(form_1, filename=Output_PDF_file)
+
+def populate_txn_details(txn_index_start, txn_index_end, start_x:int, start_y:int) -> io.BytesIO:
     global description
+    global counter
     data = io.BytesIO()
     pdf = canvas.Canvas(data)
     j = 0
-    for i in range(0, 7):
+    for i in range(txn_index_start, txn_index_end):
         try:
             if len(descriptions[i])>45:
                 descriptions[i] =  textwrap.shorten(descriptions[i], width=45)
+
             if descriptions[0] == descriptions[i] and adj_txn_dates[0] == adj_txn_dates[i] and amounts[0] == amounts[i] and running_total[0] == running_total[i]:
-                pdf.drawString(x=date_x, y=y, text=adj_txn_dates[i])
-                pdf.drawString(x=description_x, y=y, text=descriptions[i])
-                pdf.drawString(x=amount_x, y=y, text="{:,.2f}".format(float(amounts[i])))
-                pdf.drawString(x=running_x, y=y, text="{:,.2f}".format(float(running_total[i])))
+                pdf.drawString(x=start_x, y=start_y, text=adj_txn_dates[i])
+                pdf.drawString(x=start_x+65, y=start_y, text=descriptions[i])
+                pdf.drawString(x=start_x+395, y=start_y, text="{:,.2f}".format(float(amounts[i])))
+                pdf.drawString(x=start_x+465, y=start_y, text="{:,.2f}".format(float(running_total[i])))
             else:
                 j+= 20
                 j+=1
-                pdf.drawString(x=date_x, y=y-j, text=adj_txn_dates[i])
-                pdf.drawString(x=description_x, y=y-j, text=descriptions[i])
-                pdf.drawString(x=amount_x, y=y-j, text="{:,.2f}".format(float(amounts[i])))
-                pdf.drawString(x=running_x, y=y-j, text="{:,.2f}".format(float(running_total[i])))
-
+                counter+=1
+                pdf.drawString(x=date_x, y=start_y-j, text=adj_txn_dates[i])
+                pdf.drawString(x=start_x+65, y=start_y-j, text=descriptions[i])
+                pdf.drawString(x=start_x+395, y=start_y-j, text="{:,.2f}".format(float(amounts[i])))
+                pdf.drawString(x=start_x+465, y=start_y-j, text="{:,.2f}".format(float(running_total[i])))
+            
         except:
             pass
 
     g = 0
-    for i in range(0, total_txns+1):
+    for i in range(0, counter+2):
         g+= 20
         g+=1
-        pdf.drawString(x=line_x, y=line_y-g,text="_______________________________________________________________________________________________") 
+        pdf.drawString(x=0, y=start_y+35-g,text="_______________________________________________________________________________________________") 
 
     pdf.save()
     data.seek(0)
@@ -230,9 +238,8 @@ def merge(overlay_canvas: io.BytesIO, template_path: str) -> io.BytesIO:
     form.seek(0)
     return form
 
-
 def save(form: io.BytesIO, filename: str):
     with open(filename, 'wb') as f:
         f.write(form.read())
 
-run()
+print_txn_details()
