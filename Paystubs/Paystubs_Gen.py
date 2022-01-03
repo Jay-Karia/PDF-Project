@@ -44,4 +44,3 @@ def ReadingJSONData():
             subtotal_hours.append(temp_hours)
 
 ReadingJSONData()
-print(subtotal_hours)
