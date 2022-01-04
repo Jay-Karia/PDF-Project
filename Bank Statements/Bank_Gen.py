@@ -293,7 +293,9 @@ try:
                 canvas.doForm(makerl(canvas, page))
 
                 footer_text = f"Page {page_num} of {len(pages)}"
-                if counter>16 or counter<=7:
+                if counter>16:
+                    footer_text = f"Page {page_num} of {len(pages)+1}"
+                if counter <= 7 and len(pages) == 1:
                     footer_text = f"Page {page_num} of {len(pages)+1}"
 
                 canvas.saveState()
@@ -316,7 +318,13 @@ try:
                     if counter<=16:
                             canvas.drawImage('Footer_image.jpg', x=0, y=25 ,width=595, height=300)
 
-            if counter>16 or counter<=7:
+            if counter>16:
+                canvas.drawImage('Footer_image.jpg', x=0, y=25 ,width=595, height=300)
+                canvas.setPageSize((595, 300))
+                canvas.setFont('Times-Roman', 10)
+                canvas.drawString(445, 10, f"Page {len(pages)+1} of {len(pages)+1}")
+                canvas.showPage()
+            if counter<= 7 and len(pages) == 1:
                 canvas.drawImage('Footer_image.jpg', x=0, y=25 ,width=595, height=300)
                 canvas.setPageSize((595, 300))
                 canvas.setFont('Times-Roman', 10)
