@@ -187,8 +187,8 @@ try:
 
                     pdf.drawString(x=date_x, y=start_y-j, text=adj_txn_dates[i])
                     pdf.drawString(x=start_x+65, y=start_y-j, text=descriptions[i])
-                    pdf.drawRightString(x=start_x+435, y=start_y-j, text="{:,.2f}".format(float(amounts[i])))
-                    pdf.drawRightString(x=start_x+505, y=start_y-j, text="{:,.2f}".format(float(running_total[i])))
+                    pdf.drawRightString(x=start_x+425, y=start_y-j, text="{:,.2f}".format(float(amounts[i])))
+                    pdf.drawRightString(x=start_x+495, y=start_y-j, text="{:,.2f}".format(float(running_total[i])))
                     j+= 20
                     counter+=1
                 except:
@@ -197,7 +197,9 @@ try:
             g = 0
             for i in range(0, counter+1):
                 g+= 20
-                pdf.drawString(x=0, y=start_y+35-g,text="____________________________________________________________________________________________________________________________________________")
+                pdf.setFontSize(20)
+                pdf.drawString(x=start_x, y=start_y+35-g,
+                text="______________________________________________")
 
             if total_txns<= 7:
                 pdf.setFontSize(10)
@@ -276,14 +278,17 @@ try:
                 canvas.drawString(x=105, y=555, text=Account_Details[5])
                 canvas.drawString(x=125, y=555, text=Account_Details[6])
 
+            canvas.drawString(280, 500, Account_Details[7])
+
             Account_Details[8] = float(Account_Details[8])
             Account_Details[9] = float(Account_Details[9])
-            canvas.drawRightString(x=375, y=470, text="{:,.2f}".format(Account_Details[8]))
-            canvas.drawRightString(x=375, y=410, text="{:,.2f}".format(Account_Details[9]))
             canvas.drawRightString(x=375, y=450, text="{:,.2f}".format(sum_positive))
             canvas.drawRightString(x=375, y=430, text="{:,.2f}".format(sum_negative))
+            canvas.setFont(psfontname="Helvetica-Bold", size=10)
+            canvas.drawRightString(x=375, y=470, text="$"+"{:,.2f}".format(Account_Details[8]))
+            canvas.drawRightString(x=375, y=410, text="$"+"{:,.2f}".format(Account_Details[9]))
 
-            canvas.drawRightString(x = 535, y = 190, text="{:,.2f}".format(float(Account_Details[8])))
+            canvas.drawRightString(x = 535, y = 190, text="$"+"{:,.2f}".format(float(Account_Details[8])))
 
             pg_counter = 1
 
@@ -313,6 +318,7 @@ try:
 
                     end_balance_value_x = date_x+505
                     end_balance_value_y = end_balance_y
+                    canvas.setFont(psfontname="Helvetica-Bold", size=10)
                     canvas.drawRightString(x=end_balance_value_x, y=end_balance_value_y, text="$"+"{:,}".format(float(Account_Details[9])))
 
                     if counter<=16:
