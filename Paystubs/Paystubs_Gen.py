@@ -5,12 +5,26 @@ import json
 subtotal_descriptions = []
 subtotal_rates = []
 subtotal_hours = []
+subtotal_ytd_pay = []
+subtotal_current_pay = []
+
+net_pay_account_number = []
+net_pay_current_pay = []
+
+gross_pay = 0.0
+ytd_addition = 0.0
 
 def ReadingJSONData():
 
     global subtotal_descriptions
     global subtotal_rates
     global subtotal_hours
+    global subtotal_ytd_pay
+    global subtotal_current_pay
+    global net_pay_account_number
+    global net_pay_current_pay
+    global gross_pay
+    global ytd_addition
 
     with open('./Resources/Paystub_fields.json') as json_file:
         items = json.load(json_file)
@@ -38,9 +52,37 @@ def ReadingJSONData():
             temp_description = subtotals['description']
             temp_rates = subtotals['current_rate']
             temp_hours = subtotals['current_hours']
+            temp_ytd_pay = subtotals['ytd_pay']['amount']
+            temp_current_pay = subtotals['current_pay']['amount']
+
+            temp_ytd_pay = float(temp_ytd_pay)
+            ytd_addition += temp_ytd_pay
 
             subtotal_descriptions.append(temp_description)
             subtotal_rates.append(temp_rates)
             subtotal_hours.append(temp_hours)
+            subtotal_ytd_pay.append(temp_ytd_pay)
+            subtotal_current_pay.append(temp_current_pay)
+
+
+        for totals in data['earnings']['totals']:
+            temp_gross_pay = totals['current_pay']['amount']
+            if temp_gross_pay == None:
+                temp_gross_pay = 0.0
+            temp_gross_pay = float(temp_gross_pay)
+            gross_pay += temp_gross_pay
+
+        gross_pay = str(gross_pay)
+        gross_pay = "$"+"{:,.2f}".format(float(gross_pay))
+
+        for net_pay_data in data['net_pay']['distribution_details']:
+            temp_net_pay_account_number = net_pay_data['account_number']
+
+            net_pay_account_number.append(temp_net_pay_account_number)
+
+        temp_total_pays_current_pay = data['net_pay']['totals']['current_pay']['amount']
+        net_pay_current_pay.append(temp_total_pays_current_pay)
+
+        ytd_addition = "{:,.2f}".format(float(ytd_addition))
 
 ReadingJSONData()
