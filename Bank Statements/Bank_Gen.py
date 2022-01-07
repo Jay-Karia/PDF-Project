@@ -180,7 +180,7 @@ try:
             j = 0
             for i in range(txn_index_start, txn_index_end + 1):
                 try:
-                    max_char_width = 70
+                    max_char_width = 65
                     pdf.setFontSize(8)
                     if len(descriptions[i])>max_char_width:
                         descriptions[i] =  textwrap.shorten(descriptions[i], width=max_char_width)
@@ -205,6 +205,7 @@ try:
                 pdf.setFontSize(10)
                 end_balance_x = date_x
                 end_balance_y = y-(counter*20)
+                pdf.setFont('Helvetica-Bold', 10)
                 pdf.drawString(x=end_balance_x, y=end_balance_y, text="End Balance:")
 
                 end_balance_value_x = date_x+505
@@ -234,12 +235,14 @@ try:
         def insertPages():
             writer = PdfFileWriter()
             reader = PdfFileReader(open(Input_PDF_file, 'rb'))
+            footer_page = reader.getPage(2)
             writer.insertPage(reader.getPage(0), 0)
 
             i = 0
             for i in range(7, total_txns, txn_per_pages):
                 writer.insertPage(reader.getPage(1), i)
 
+            writer.addPage(footer_page)
             output = open(Output_PDF_file,'wb')
             writer.write(output) 
             output.close()
@@ -278,7 +281,7 @@ try:
                 canvas.drawString(x=105, y=555, text=Account_Details[5])
                 canvas.drawString(x=125, y=555, text=Account_Details[6])
 
-            canvas.drawString(280, 500, Account_Details[7])
+            canvas.drawString(285, 500, Account_Details[7])
 
             Account_Details[8] = float(Account_Details[8])
             Account_Details[9] = float(Account_Details[9])
@@ -291,17 +294,11 @@ try:
             canvas.drawRightString(x = 535, y = 190, text="$"+"{:,.2f}".format(float(Account_Details[8])))
 
             pg_counter = 1
-
-
             for page_num, page in enumerate(pages, start=1):
                 pg_counter += 1
                 canvas.doForm(makerl(canvas, page))
 
                 footer_text = f"Page {page_num} of {len(pages)}"
-                if counter>16:
-                    footer_text = f"Page {page_num} of {len(pages)+1}"
-                if counter <= 7 and len(pages) == 1:
-                    footer_text = f"Page {page_num} of {len(pages)+1}"
 
                 canvas.saveState()
                 canvas.setStrokeColorRGB(0, 0, 0)
@@ -311,31 +308,21 @@ try:
                 canvas.restoreState()
                 canvas.showPage()
             
-                if pg_counter == len(pages):
+                if pg_counter == len(pages)-1:
                     end_balance_y = new_page_date_y-(20*counter)
                     end_balance_x = 35
+                    canvas.setFont(psfontname="Helvetica-Bold", size=10)
                     canvas.drawString(x=end_balance_x, y=end_balance_y, text="End Balance:")
 
                     end_balance_value_x = date_x+505
                     end_balance_value_y = end_balance_y
-                    canvas.setFont(psfontname="Helvetica-Bold", size=10)
                     canvas.drawRightString(x=end_balance_value_x, y=end_balance_value_y, text="$"+"{:,}".format(float(Account_Details[9])))
+                    # canvas.drawImage('Footer_image.jpg', x=0, y=25 ,width=595, height=300)
 
-                    if counter<=16:
-                            canvas.drawImage('Footer_image.jpg', x=0, y=25 ,width=595, height=300)
+                if pg_counter == len(pages):
+                    canvas.drawImage('Footer_image.jpg', x=0, y=425 ,width=595, height=300)
 
-            if counter>16:
-                canvas.drawImage('Footer_image.jpg', x=0, y=25 ,width=595, height=300)
-                canvas.setPageSize((595, 300))
-                canvas.setFont('Times-Roman', 10)
-                canvas.drawString(445, 10, f"Page {len(pages)+1} of {len(pages)+1}")
-                canvas.showPage()
-            if counter<= 7 and len(pages) == 1:
-                canvas.drawImage('Footer_image.jpg', x=0, y=25 ,width=595, height=300)
-                canvas.setPageSize((595, 300))
-                canvas.setFont('Times-Roman', 10)
-                canvas.drawString(445, 10, f"Page {len(pages)+1} of {len(pages)+1}")
-                canvas.showPage()
+
 
             canvas.save()
 
@@ -347,4 +334,4 @@ try:
 except:
     print("\nCould Not Generate PDF\n")
     print(f"Required arguments missing, arguments given -> {len(sys.argv)}")
-    print("Required Arguments: 1) Python Script 2) Inputs JSON file 3) DDMMYYYY 4) PDF file name to be generated\n")
+    print("Required Arguments: 1) Python Script 2) Inputs JSON file 3) DDMMYYYY 4) Input PDF file name \n")
