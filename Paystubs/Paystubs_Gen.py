@@ -162,6 +162,7 @@ def PrintingFixedData():
         pdf.drawString(185, 670, employee_info[6])
 
         pdf.drawString(350, 680, employee_info[0])
+
         if employee_info[1] == None:
             employee_info[1] = ""
             pdf.drawString(350, 665, employee_info[2])
@@ -169,12 +170,22 @@ def PrintingFixedData():
             pdf.drawString(420, 650, employee_info[4])
             pdf.drawString(440, 650, employee_info[5])
 
+            pdf.drawString(100, 200, employee_info[2])
+            pdf.drawString(100, 185, employee_info[3]+",")
+            pdf.drawString(170, 185, employee_info[4])
+            pdf.drawString(190, 185, employee_info[5])
+
         elif employee_info[2] == None:
             employee_info[2] = ""
             pdf.drawString(350, 665, employee_info[1])
             pdf.drawString(350, 650, employee_info[3]+",")
             pdf.drawString(420, 650, employee_info[4])
             pdf.drawString(440, 650, employee_info[5])
+            
+            pdf.drawString(100, 200, employee_info[1])
+            pdf.drawString(100, 185, employee_info[3]+",")
+            pdf.drawString(170, 185, employee_info[4])
+            pdf.drawString(190, 185, employee_info[5])
 
         else:
             pdf.drawString(350, 665, employee_info[1])
@@ -183,11 +194,21 @@ def PrintingFixedData():
             pdf.drawString(420, 635, employee_info[4])
             pdf.drawString(440, 635, employee_info[5])
 
+            pdf.drawString(100, 215, employee_info[1])
+            pdf.drawString(100, 200, employee_info[2])
+            pdf.drawString(100, 185, employee_info[3]+",")
+            pdf.drawString(170, 185, employee_info[4])
+            pdf.drawString(190, 185, employee_info[5])
+
         pdf.drawString(430, 735, period_beginning)
         pdf.drawString(430, 723, period_ending)
+
         pdf.drawString(430, 711, pay_date)
+        pdf.drawString(470, 190, pay_date)
 
-
+        pdf.drawString(100, 125, employee_info[0])
+        pdf.drawString(353, 125, net_pay_account_number[0])
+        pdf.drawString(553, 125, net_pay_current_pay[0])
 
         pdf.save()
         data.seek(0)
