@@ -14,6 +14,10 @@ subtotal_hours = []
 subtotal_ytd_pay = []
 subtotal_current_pay = []
 
+period_begin = ''
+period_end = ''
+pay_date_json = ''
+
 net_pay_account_number = []
 net_pay_current_pay = []
 
@@ -23,7 +27,10 @@ ytd_addition = 0.0
 employer_info = []
 employee_info = []
 
-def ReadingJSONData():
+input_pdf_file = 'Template.pdf'
+output_pdf_file = "Final Paystubs.pdf"
+
+def ReadJSONData():
 
     global subtotal_descriptions
     global subtotal_rates
@@ -36,8 +43,11 @@ def ReadingJSONData():
     global ytd_addition
     global employee_info
     global employer_info
+    global period_begin
+    global period_end
+    global pay_date_json
 
-    with open('./Resources/Paystub_fields.json') as json_file:
+    with open('Paystub_fields.json') as json_file:
         items = json.load(json_file)
     for data in items['response']:
         # employer
@@ -100,25 +110,53 @@ def ReadingJSONData():
 
         ytd_addition = "{:,.2f}".format(float(ytd_addition))
 
-def PrintingFixedData(): 
+        temp_period_begin = data['paystub_details']['pay_period_start_date']
+        temp_period_begin = temp_period_begin.replace('-', '')
+        begin_year = temp_period_begin[0]+temp_period_begin[1]+temp_period_begin[2]+temp_period_begin[3]
+        begin_month = temp_period_begin[4]+temp_period_begin[5]
+        begin_date = temp_period_begin[6]+temp_period_begin[7]
+        period_begin = f"{begin_date}{begin_month}{begin_year}"
 
-    input_pdf_file = 'Template.pdf'
-    output_pdf_file = "Final Paystubs.pdf"
+        temp_period_end = data['paystub_details']['pay_period_end_date']
+        temp_period_end = temp_period_end.replace('-', '')
+        end_year = temp_period_end[0]+temp_period_end[1]+temp_period_end[2]+temp_period_end[3]
+        end_month = temp_period_end[4]+temp_period_end[5]
+        end_date = temp_period_end[6]+temp_period_end[7]
+        period_end = f"{end_date}{end_month}{end_year}"
+
+        temp_pay_date = data['paystub_details']['pay_date']
+        temp_pay_date = temp_pay_date.replace('-', '')
+        pay_year = temp_pay_date[0]+temp_pay_date[1]+temp_pay_date[2]+temp_pay_date[3]
+        pay_month = temp_pay_date[4]+temp_pay_date[5]
+        temp_pay_date = temp_pay_date[6]+temp_pay_date[7]
+        pay_date_json = f"{temp_pay_date}{pay_month}{pay_year}"
+
+def PrintFixedPosData(): 
+
 
     try:
-        period_beginning = arg[1]
+        try:
+            period_beginning = arg[1]
+        except:
+            period_beginning = period_begin
         pg_year = period_beginning[4]+period_beginning[5]+period_beginning[6]+period_beginning[7]
         pg_month = period_beginning[2]+period_beginning[3]
         pg_day = period_beginning[0]+period_beginning[1]
         period_beginning = f"{pg_month}/{pg_day}/{pg_year}"
 
-        period_ending = arg[2]
+        try:
+            period_ending = arg[2]
+        except:
+            period_ending = period_end
         pe_year = period_ending[4]+period_ending[5]+period_ending[6]+period_ending[7]
         pe_month = period_ending[2]+period_ending[3]
         pe_day = period_ending[0]+period_ending[1]
         period_ending = f"{pe_month}/{pe_day}/{pe_year}"
 
-        pay_date = arg[3]
+        try:
+            pay_date = arg[3]
+        except:
+            pay_date = pay_date_json
         pd_year = pay_date[4]+pay_date[5]+pay_date[6]+pay_date[7]
         pd_month = pay_date[2]+pay_date[3]
         pd_day = pay_date[0]+pay_date[1]
@@ -231,5 +269,5 @@ def PrintingFixedData():
 
     run()
 
-ReadingJSONData()
-PrintingFixedData()
+ReadJSONData()
+PrintFixedPosData()
