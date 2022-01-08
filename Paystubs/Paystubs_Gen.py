@@ -14,6 +14,8 @@ subtotal_hours = []
 subtotal_ytd_pay = []
 subtotal_current_pay = []
 
+included_descriptions = ['Salary', 'Regular Pay', 'Overtime', 'Sick', 'Commission', 'Double Time', 'Holiday', 'Meals', 'Vacation']
+
 period_begin = ''
 period_end = ''
 pay_date_json = ''
@@ -77,8 +79,12 @@ def ReadJSONData():
             temp_description = subtotals['description']
             temp_rates = subtotals['current_rate']
             temp_hours = subtotals['current_hours']
+            if temp_hours is None:
+                temp_hours = ""
             temp_ytd_pay = subtotals['ytd_pay']['amount']
             temp_current_pay = subtotals['current_pay']['amount']
+
+
 
             temp_ytd_pay = float(temp_ytd_pay)
             ytd_addition += temp_ytd_pay
@@ -269,5 +275,48 @@ def PrintFixedPosData():
 
     run()
 
+def PrintDynamicPosData():
+    def run():
+        canvas_data = get_overlay_data()
+        form = merge(canvas_data, template_path=output_pdf_file)
+        save(form, filename=output_pdf_file)
+
+    def get_overlay_data() -> io.BytesIO:
+        global subtotal_descriptions
+        data = io.BytesIO()
+        pdf = Canvas(data)
+        j = 0
+        pdf.setFontSize(10)
+        for i in range(len(subtotal_descriptions)):
+            subtotal_descriptions[i] = subtotal_descriptions[i].title() 
+            if included_descriptions[i] in subtotal_descriptions:
+                j+=15
+                pdf.drawString(20, 595-j, included_descriptions[i])
+
+        pdf.save()
+        data.seek(0)
+        return data
+
+    def merge(overlay_canvas: io.BytesIO, template_path: str) -> io.BytesIO:
+        template_pdf = pdfrw.PdfReader(template_path)
+        overlay_pdf = pdfrw.PdfReader(overlay_canvas)
+
+        for page, data in zip(template_pdf.pages, overlay_pdf.pages):
+            overlay = pdfrw.PageMerge().add(data)[0]
+            pdfrw.PageMerge(page).add(overlay).render()
+
+        form = io.BytesIO()
+        pdfrw.PdfWriter().write(form, template_pdf)
+        form.seek(0)
+        return form
+
+    def save(form: io.BytesIO, filename: str):
+        with open(filename, 'wb') as f:
+            f.write(form.read())
+
+    run()
+    pass
+
 ReadJSONData()
 PrintFixedPosData()
+PrintDynamicPosData()
