@@ -78,6 +78,8 @@ def ReadJSONData():
 
             temp_description = subtotals['description']
             temp_rates = subtotals['current_rate']
+            if temp_rates == None:
+                temp_rates = ""
             temp_hours = subtotals['current_hours']
             if temp_hours is None:
                 temp_hours = ""
@@ -288,10 +290,18 @@ def PrintDynamicPosData():
         j = 0
         pdf.setFontSize(10)
         for i in range(len(subtotal_descriptions)):
-            subtotal_descriptions[i] = subtotal_descriptions[i].title() 
+            subtotal_descriptions[i] = subtotal_descriptions[i].title()
             if included_descriptions[i] in subtotal_descriptions:
                 j+=15
                 pdf.drawString(20, 595-j, included_descriptions[i])
+        j=0
+        for i in range(len(subtotal_rates)):
+            if subtotal_rates[i] == "":
+                pass
+            else:
+                subtotal_rates[i] = "{:,.2f}".format(float(subtotal_rates[i]))
+                j+=15
+                pdf.drawRightString(145, 595-j, subtotal_rates[i])
 
         pdf.save()
         data.seek(0)
