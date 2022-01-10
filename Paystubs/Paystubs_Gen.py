@@ -1,6 +1,4 @@
 # importing required modules
-from datetime import datetime
-from time import daylight
 from reportlab.pdfgen.canvas import Canvas
 from sys import argv as arg
 import pdfrw
@@ -14,6 +12,11 @@ JSON_rates = []
 subtotal_hours = []
 subtotal_ytd_pay = []
 subtotal_current_pay = []
+
+# deductions
+deductions_description = []
+deductions_amount = []
+deductions_ytd_pay = []
 
 Needed_descriptions = ['Salary', 'Regular Pay', 'Overtime', 'Sick', 'Commission', 'Double Time', 'Holiday', 'Meals', 'Vacation']
 
@@ -49,6 +52,9 @@ def ReadJSONData():
     global period_begin
     global period_end
     global pay_date_json
+    global deductions_description
+    global deductions_amount
+    global deductions_ytd_pay
 
     with open('Paystub_fields_9Jan.json') as json_file:
         items = json.load(json_file)
@@ -97,6 +103,14 @@ def ReadJSONData():
                 temp_current_pay = ""
             subtotal_current_pay.append(temp_current_pay)
 
+        for deductions in data['deductions']['subtotals']:
+            description = deductions['description']
+            amount = deductions['current_pay']['amount']
+            ytd_pay = deductions['ytd_pay']['amount']
+
+            deductions_amount.append(amount)
+            deductions_ytd_pay.append(ytd_pay)
+            deductions_description.append(description)
 
         for totals in data['earnings']['totals']:
             temp_gross_pay = totals['current_pay']['amount']
@@ -324,6 +338,12 @@ def PrintDynamicPosData():
         pdf.drawImage(image=file_name, x=100, y=start_y-(counter*15)-15, width=140, height=15)
         pdf.setFont(psfontname="Helvetica-Bold", size=10)
         pdf.drawRightString(230, start_y-(counter*15)-12, gross_pay)
+
+        # Deductions and Statutory
+        deductions_start_y = start_y-(counter*15)-45
+        Vertical_gap = 0
+        Deductions_image_file_name = "03_Paystub_Deductions_Header_line.png"
+        pdf.drawImage(image=Deductions_image_file_name, x=20, y=deductions_start_y, width=290, height=15)
 
         pdf.save()
         data.seek(0)
