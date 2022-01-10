@@ -20,6 +20,7 @@ deductions_ytd_pay = []
 
 Needed_descriptions = ['Salary', 'Regular Pay', 'Overtime', 'Sick', 'Commission', 'Double Time', 'Holiday', 'Meals', 'Vacation']
 Deductions_Needed_Statutory = ['Federal Income Tax', 'Employee FICA', 'Social Security Employee Tax', 'Medicare Tax', 'State Income Tax', 'State Disability Insurance (SDI)', 'Paid Family & Medical Leave']
+other_deductions = ['Medical', 'Employee Group Term Life Insurance', '401(K) Employee']
 
 period_begin = ''
 period_end = ''
@@ -27,6 +28,7 @@ pay_date_json = ''
 
 net_pay_account_number = []
 net_pay_current_pay = []
+net_pay_description = []
 
 gross_pay = 0.0
 ytd_addition = 0.0
@@ -55,6 +57,7 @@ def ReadJSONData():
     global deductions_description
     global deductions_amount
     global deductions_ytd_pay
+    global net_pay_description
 
     with open('Paystub_fields_9Jan.json') as json_file:
         items = json.load(json_file)
@@ -79,6 +82,7 @@ def ReadJSONData():
         employee_marital_status = data['employee']['marital_status']
 
         employee_info = [employee_name, employee_address_1, employee_address_2, employee_city, employee_state, employee_postal_code, employee_marital_status]
+
 
         # earning subtotals
         for subtotals in data['earnings']['subtotals']:
@@ -123,11 +127,13 @@ def ReadJSONData():
 
         for net_pay_data in data['net_pay']['distribution_details']:
             temp_net_pay_account_number = net_pay_data['account_number']
+            temp_net_pay_des = net_pay_data['bank_account_type']
+            temp_total_pays_current_pay = data['net_pay']['totals']['current_pay']['amount']
+            net_pay_description.append(temp_net_pay_des)
+            net_pay_current_pay.append(temp_total_pays_current_pay)
 
             net_pay_account_number.append(temp_net_pay_account_number)
 
-        temp_total_pays_current_pay = data['net_pay']['totals']['current_pay']['amount']
-        net_pay_current_pay.append(temp_total_pays_current_pay)
 
 
         temp_period_begin = data['paystub_details']['pay_period_start_date']
@@ -190,6 +196,7 @@ def PrintFixedPosData():
         save(form, filename=output_pdf_file)
 
     def get_overlay_data() -> io.BytesIO:
+        global net_pay_addition
         data = io.BytesIO()
         pdf = Canvas(data)
 
@@ -266,7 +273,10 @@ def PrintFixedPosData():
 
         pdf.drawString(100, 125, employee_info[0])
         pdf.drawString(353, 125, net_pay_account_number[0])
-        pdf.drawString(553, 125, net_pay_current_pay[0])
+
+        net_pay_addition = "{:,.2f}".format(float(net_pay_current_pay[0]))
+
+        pdf.drawString(553, 125, str(net_pay_current_pay[0]))
 
         pdf.save()
         data.seek(0)
@@ -353,7 +363,7 @@ def PrintDynamicPosData():
         deductions_start_y = start_y-(counter*15)-45
         Vertical_gap = 0
         Deductions_image_file_name = "03_Paystub_Deductions_Header_line.png"
-        pdf.drawImage(image=Deductions_image_file_name, x=20, y=deductions_start_y, width=330, height=13)
+        pdf.drawImage(image=Deductions_image_file_name, x=20, y=deductions_start_y, width=250, height=13)
 
         pdf.setFont('Helvetica', size=10)
         counter = 0
@@ -362,7 +372,7 @@ def PrintDynamicPosData():
             if Deductions_Needed_Statutory[i] in deductions_description:
                 Vertical_gap += 15
 
-                pdf.drawString(125, deductions_start_y-Vertical_gap, Deductions_Needed_Statutory[i])
+                pdf.drawString(100, deductions_start_y-Vertical_gap, Deductions_Needed_Statutory[i])
                 temp_value = Deductions_Needed_Statutory[i]
                 index = deductions_description.index(temp_value)
 
@@ -378,6 +388,47 @@ def PrintDynamicPosData():
                 pdf.drawRightString(330, deductions_start_y-Vertical_gap, deductions_ytd_pay[index])
 
                 counter +=1
+
+            other_start_y = deductions_start_y-(counter*15)
+            # other_start_y = other_start_y-deductions_start_y
+
+        # Other Deductions
+        other_line_file_name = ""
+        counter = 0
+        # print(deductions_amount)
+        # print(deductions_ytd_pay)
+        # pdf.drawImage()
+        for i in range(len(other_deductions)):
+            if other_deductions[i] in deductions_description:
+                Vertical_gap += 15
+
+                pdf.drawString(100, other_start_y-Vertical_gap, other_deductions[i])
+                temp_value = other_deductions[i]
+                index = deductions_description.index(temp_value)
+
+                if deductions_amount[index] != "":
+                    deductions_amount[index] = "{:,.2f}".format(float(deductions_amount[index]))
+                if deductions_ytd_pay[index] != "":
+                    deductions_ytd_pay[index] = "{:,.2f}".format(float(deductions_ytd_pay[index]))
+
+                pdf.drawRightString(250, other_start_y-Vertical_gap, "-{}".format(deductions_amount[index]))
+                pdf.drawRightString(330, other_start_y-Vertical_gap, deductions_ytd_pay[index])
+
+                counter +=1
+        net_pay_image_file = "04_Paystub_Net_pay_line.png"
+        pdf.drawImage(image=net_pay_image_file, x=100, y=other_start_y-(counter*15)-65, width=140, height=15)
+        pdf.setFont('Helvetica-Bold', 10)
+        net_pay_current_pay[0] = "{:,.2f}".format(float(net_pay_current_pay[0]))
+        pdf.drawString(x=190,y=other_start_y-(counter*15)-60, text="${}".format(net_pay_current_pay[0]))
+
+        pdf.setFont('Helvetica', 10)
+
+        net_pay_start_y = other_start_y-(counter*15)-15
+
+        for i in range(len(net_pay_description)):
+            Vertical_gap += 15
+            pdf.drawString(100, net_pay_start_y-Vertical_gap, net_pay_description[i])
+            pdf.drawRightString(250, net_pay_start_y-Vertical_gap, "-{}".format(net_pay_current_pay[i]))
 
         pdf.save()
         data.seek(0)
