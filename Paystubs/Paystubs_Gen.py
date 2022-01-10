@@ -19,6 +19,7 @@ deductions_amount = []
 deductions_ytd_pay = []
 
 Needed_descriptions = ['Salary', 'Regular Pay', 'Overtime', 'Sick', 'Commission', 'Double Time', 'Holiday', 'Meals', 'Vacation']
+Deductions_Needed_Statutory = ['Federal Income Tax', 'Employee FICA', 'Social Security Employee Tax', 'Medicare Tax', 'State Income Tax', 'State Disability Insurance (SDI)', 'Paid Family & Medical Leave']
 
 period_begin = ''
 period_end = ''
@@ -46,7 +47,6 @@ def ReadJSONData():
     global net_pay_account_number
     global net_pay_current_pay
     global gross_pay
-    global ytd_addition
     global employee_info
     global employer_info
     global period_begin
@@ -93,7 +93,6 @@ def ReadJSONData():
             temp_ytd_pay = subtotals['ytd_pay']['amount']
             temp_current_pay = subtotals['current_pay']['amount']
             temp_ytd_pay = float(temp_ytd_pay)
-            ytd_addition += temp_ytd_pay
 
             JSON_descriptions.append(temp_description)
             JSON_rates.append(temp_rates)
@@ -130,7 +129,6 @@ def ReadJSONData():
         temp_total_pays_current_pay = data['net_pay']['totals']['current_pay']['amount']
         net_pay_current_pay.append(temp_total_pays_current_pay)
 
-        ytd_addition = "{:,.2f}".format(float(ytd_addition))
 
         temp_period_begin = data['paystub_details']['pay_period_start_date']
         temp_period_begin = temp_period_begin.replace('-', '')
@@ -298,14 +296,19 @@ def PrintDynamicPosData():
         save(form, filename=output_pdf_file)
 
     def get_overlay_data() -> io.BytesIO:
+
         global JSON_descriptions
         global JSON_rates
+        global ytd_addition
+        global subtotal_ytd_pay
+
         data = io.BytesIO()
         pdf = Canvas(data)
         Vertical_gap = 0
         pdf.setFontSize(10)
         start_y = 595
         counter = 0
+        float_ytd = 0.0
         for i in range(len(Needed_descriptions)):
             if Needed_descriptions[i] in JSON_descriptions:
                 Vertical_gap += 15
@@ -333,17 +336,48 @@ def PrintDynamicPosData():
                 pdf.drawRightString(250, start_y-Vertical_gap, subtotal_current_pay[index])
                 pdf.drawRightString(330, start_y-Vertical_gap, subtotal_ytd_pay[index])
                 counter +=1
+
+                subtotal_ytd_pay[index] = subtotal_ytd_pay[index].replace(',', '')
+                float_ytd += float(subtotal_ytd_pay[index])
+
         # drawing gross pay image and writing the gross pay value
         file_name = '02_Paystub_Gross_Income_line.png'
-        pdf.drawImage(image=file_name, x=100, y=start_y-(counter*15)-15, width=140, height=15)
+        pdf.drawImage(image=file_name, x=100, y=start_y-(counter*15)-20, width=140, height=15)
         pdf.setFont(psfontname="Helvetica-Bold", size=10)
-        pdf.drawRightString(230, start_y-(counter*15)-12, gross_pay)
+        pdf.drawRightString(230, start_y-(counter*15)-17, gross_pay)
+
+        float_ytd = "{:,.2f}".format(float(float_ytd))
+        pdf.drawRightString(330, start_y-(counter*15)-17, float_ytd)
 
         # Deductions and Statutory
         deductions_start_y = start_y-(counter*15)-45
         Vertical_gap = 0
         Deductions_image_file_name = "03_Paystub_Deductions_Header_line.png"
-        pdf.drawImage(image=Deductions_image_file_name, x=20, y=deductions_start_y, width=290, height=15)
+        pdf.drawImage(image=Deductions_image_file_name, x=20, y=deductions_start_y, width=330, height=13)
+
+        pdf.setFont('Helvetica', size=10)
+        counter = 0
+
+        for i in range(len(Deductions_Needed_Statutory)):
+            if Deductions_Needed_Statutory[i] in deductions_description:
+                Vertical_gap += 15
+
+                pdf.drawString(125, deductions_start_y-Vertical_gap, Deductions_Needed_Statutory[i])
+                temp_value = Deductions_Needed_Statutory[i]
+                index = deductions_description.index(temp_value)
+
+                deductions_amount[index] = str(deductions_amount[index])
+                deductions_ytd_pay[index] = str(deductions_ytd_pay[index])
+
+                if deductions_amount[index] != "":
+                    deductions_amount[index] = "{:,.2f}".format(float(deductions_amount[index]))
+                if deductions_ytd_pay[index] != "":
+                    deductions_ytd_pay[index] = "{:,.2f}".format(float(deductions_ytd_pay[index]))
+
+                pdf.drawRightString(250, deductions_start_y-Vertical_gap, "-{}".format(deductions_amount[index]))
+                pdf.drawRightString(330, deductions_start_y-Vertical_gap, deductions_ytd_pay[index])
+
+                counter +=1
 
         pdf.save()
         data.seek(0)
