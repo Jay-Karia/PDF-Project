@@ -83,7 +83,6 @@ def ReadJSONData():
 
         employee_info = [employee_name, employee_address_1, employee_address_2, employee_city, employee_state, employee_postal_code, employee_marital_status]
 
-
         # earning subtotals
         for subtotals in data['earnings']['subtotals']:
 
@@ -134,8 +133,6 @@ def ReadJSONData():
 
             net_pay_account_number.append(temp_net_pay_account_number)
 
-
-
         temp_period_begin = data['paystub_details']['pay_period_start_date']
         temp_period_begin = temp_period_begin.replace('-', '')
         begin_year = temp_period_begin[0]+temp_period_begin[1]+temp_period_begin[2]+temp_period_begin[3]
@@ -158,8 +155,6 @@ def ReadJSONData():
         pay_date_json = f"{temp_pay_date}{pay_month}{pay_year}"
 
 def PrintFixedPosData(): 
-
-
     try:
         try:
             period_beginning = arg[1]
@@ -390,14 +385,11 @@ def PrintDynamicPosData():
                 counter +=1
 
             other_start_y = deductions_start_y-(counter*15)
-            # other_start_y = other_start_y-deductions_start_y
 
         # Other Deductions
-        other_line_file_name = ""
+        other_line_file_name = "other_line_image.png"
         counter = 0
-        # print(deductions_amount)
-        # print(deductions_ytd_pay)
-        # pdf.drawImage()
+        pdf.drawImage(other_line_file_name, 100, y=other_start_y-30, width=140, height=15)
         for i in range(len(other_deductions)):
             if other_deductions[i] in deductions_description:
                 Vertical_gap += 15
@@ -450,11 +442,9 @@ def PrintDynamicPosData():
     def save(form: io.BytesIO, filename: str):
         with open(filename, 'wb') as f:
             f.write(form.read())
-
     run()
-    pass
+    os.system(f"{output_pdf_file}")
 
 ReadJSONData()
 PrintFixedPosData()
 PrintDynamicPosData()
-# os.system(f"{output_pdf_file}")
