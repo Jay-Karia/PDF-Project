@@ -15,7 +15,7 @@ subtotal_hours = []
 subtotal_ytd_pay = []
 subtotal_current_pay = []
 
-Needed_descriptions = ['Salary', 'Regular Pay', 'Overtime', 'Sick', 'Commission', 'Double Time', 'Holiday', 'Meals', 'Vacation', 'Otcmsn', 'Double Time']
+Needed_descriptions = ['Salary', 'Regular Pay', 'Overtime', 'Sick', 'Commission', 'Double Time', 'Holiday', 'Meals', 'Vacation']
 
 period_begin = ''
 period_end = ''
@@ -86,9 +86,6 @@ def ReadJSONData():
                 temp_hours = ""
             temp_ytd_pay = subtotals['ytd_pay']['amount']
             temp_current_pay = subtotals['current_pay']['amount']
-
-
-
             temp_ytd_pay = float(temp_ytd_pay)
             ytd_addition += temp_ytd_pay
 
@@ -96,6 +93,8 @@ def ReadJSONData():
             JSON_rates.append(temp_rates)
             subtotal_hours.append(temp_hours)
             subtotal_ytd_pay.append(temp_ytd_pay)
+            if temp_current_pay == None:
+                temp_current_pay = ""
             subtotal_current_pay.append(temp_current_pay)
 
 
@@ -286,26 +285,45 @@ def PrintDynamicPosData():
 
     def get_overlay_data() -> io.BytesIO:
         global JSON_descriptions
+        global JSON_rates
         data = io.BytesIO()
         pdf = Canvas(data)
         Vertical_gap = 0
         pdf.setFontSize(10)
-        json_des_len = len(JSON_descriptions)
+        start_y = 595
+        counter = 0
         for i in range(len(Needed_descriptions)):
             if Needed_descriptions[i] in JSON_descriptions:
                 Vertical_gap += 15
-                try:
-                    if i<json_des_len:
-                        subtotal_ytd_pay[i] = str(subtotal_ytd_pay[i])
-                        JSON_rates[i] = "{:,.2f}".format(float(JSON_rates[i]))
-                        pdf.drawString(20, 595-Vertical_gap, JSON_descriptions[i])
-                        pdf.drawRightString(140, 595-Vertical_gap, JSON_rates[i])
-                        pdf.drawRightString(190, 595-Vertical_gap, subtotal_hours[i])
-                        pdf.drawRightString(250, 595-Vertical_gap, subtotal_current_pay[i])
-                        pdf.drawRightString(330, 595-Vertical_gap, subtotal_ytd_pay[i])
-                except:
-                    pdf.drawString(20, 595-Vertical_gap, JSON_descriptions[i])
-                    pdf.drawRightString(330, 595-Vertical_gap, subtotal_ytd_pay[i])
+
+                pdf.drawString(20, start_y-Vertical_gap, Needed_descriptions[i])
+                temp_value = Needed_descriptions[i]
+                index = JSON_descriptions.index(temp_value)
+
+                subtotal_ytd_pay[index] = str(subtotal_ytd_pay[index])
+                subtotal_hours[index] = str(subtotal_hours[index])
+                subtotal_current_pay[index] = str(subtotal_current_pay[index])
+                JSON_rates[index] = str(JSON_rates[index])
+
+                if JSON_rates[index] != "":
+                    JSON_rates[index] = "{:,.2f}".format(float(JSON_rates[index]))
+                if subtotal_ytd_pay[index] != "": 
+                    subtotal_ytd_pay[index] = "{:,.2f}".format(float(subtotal_ytd_pay[index]))
+                if subtotal_hours[index] != "":
+                    subtotal_hours[index] = "{:,.2f}".format(float(subtotal_hours[index]))
+                if subtotal_current_pay[index] != "":
+                    subtotal_current_pay[index] = "{:,.2f}".format(float(subtotal_current_pay[index]))
+
+                pdf.drawRightString(140, start_y-Vertical_gap, JSON_rates[index])
+                pdf.drawRightString(190, start_y-Vertical_gap, subtotal_hours[index])
+                pdf.drawRightString(250, start_y-Vertical_gap, subtotal_current_pay[index])
+                pdf.drawRightString(330, start_y-Vertical_gap, subtotal_ytd_pay[index])
+                counter +=1
+        # drawing gross pay image and writing the gross pay value
+        file_name = '02_Paystub_Gross_Income_line.png'
+        pdf.drawImage(image=file_name, x=100, y=start_y-(counter*15)-15, width=140, height=15)
+        pdf.setFont(psfontname="Helvetica-Bold", size=10)
+        pdf.drawRightString(230, start_y-(counter*15)-12, gross_pay)
 
         pdf.save()
         data.seek(0)
