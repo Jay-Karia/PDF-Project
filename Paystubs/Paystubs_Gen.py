@@ -19,7 +19,7 @@ deductions_amount = []
 deductions_ytd_pay = []
 
 Needed_descriptions = ['Salary', 'Regular Pay', 'Overtime', 'Sick', 'Commission', 'Double Time', 'Holiday', 'Meals', 'Vacation']
-Deductions_Needed_Statutory = ['Federal Income Tax', 'Employee FICA', 'Social Security Employee Tax', 'Medicare Tax', 'State Income Tax', 'State Disability Insurance (SDI)', 'Paid Family & Medical Leave']
+Deductions_Needed_Statutory = ['Federal Income Tax', 'Employee FICA', 'Social Security Tax', 'Medicare Tax', 'NY State Income Tax', 'NY SDI', 'Paid Family & Medical Leave']
 other_deductions = ['Medical', 'Employee Group Term Life Insurance', '401(K) Employee']
 
 period_begin = ''
@@ -381,19 +381,20 @@ def PrintDynamicPosData():
 
                 pdf.drawRightString(250, deductions_start_y-Vertical_gap, "-{}".format(deductions_amount[index]))
                 pdf.drawRightString(330, deductions_start_y-Vertical_gap, deductions_ytd_pay[index])
+                other_start_y = deductions_start_y-(counter*15)
 
                 counter +=1
 
-            other_start_y = deductions_start_y-(counter*15)
 
         # Other Deductions
-        other_line_file_name = "other_line_image.png"
+        Vertical_gap = 0
+        other_line_file_name = "04_Paystub_other_line.png"
         counter = 0
-        pdf.drawImage(other_line_file_name, 100, y=other_start_y-30, width=140, height=15)
+        other_start_y-= 40
+        pdf.drawImage(other_line_file_name, 100, y=other_start_y, width=140, height=15)
         for i in range(len(other_deductions)):
             if other_deductions[i] in deductions_description:
                 Vertical_gap += 15
-
                 pdf.drawString(100, other_start_y-Vertical_gap, other_deductions[i])
                 temp_value = other_deductions[i]
                 index = deductions_description.index(temp_value)
@@ -407,20 +408,23 @@ def PrintDynamicPosData():
                 pdf.drawRightString(330, other_start_y-Vertical_gap, deductions_ytd_pay[index])
 
                 counter +=1
+
+        # net pay
+        Vertical_gap = 0
         net_pay_image_file = "04_Paystub_Net_pay_line.png"
-        pdf.drawImage(image=net_pay_image_file, x=100, y=other_start_y-(counter*15)-65, width=140, height=15)
+        net_pay_image_y = other_start_y-(counter*15)-30
+        pdf.drawImage(image=net_pay_image_file, x=100, y=other_start_y-(counter*15)-30, width=140, height=15)
         pdf.setFont('Helvetica-Bold', 10)
         net_pay_current_pay[0] = "{:,.2f}".format(float(net_pay_current_pay[0]))
-        pdf.drawString(x=190,y=other_start_y-(counter*15)-60, text="${}".format(net_pay_current_pay[0]))
+        pdf.drawString(x=190,y=net_pay_image_y+5, text="${}".format(net_pay_current_pay[0]))
 
         pdf.setFont('Helvetica', 10)
 
-        net_pay_start_y = other_start_y-(counter*15)-15
 
         for i in range(len(net_pay_description)):
             Vertical_gap += 15
-            pdf.drawString(100, net_pay_start_y-Vertical_gap, net_pay_description[i])
-            pdf.drawRightString(250, net_pay_start_y-Vertical_gap, "-{}".format(net_pay_current_pay[i]))
+            pdf.drawString(100, net_pay_image_y-Vertical_gap, net_pay_description[i])
+            pdf.drawRightString(250, net_pay_image_y-Vertical_gap, "-{}".format(net_pay_current_pay[i]))
 
         pdf.save()
         data.seek(0)
