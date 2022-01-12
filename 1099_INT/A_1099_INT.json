@@ -1,0 +1,247 @@
+{
+    "status": 200,
+    "response": {
+        "pk": 32553124,
+        "uuid": "14f006ba-503a-4880-89ca-1b75e714ec51",
+        "forms": [
+            {
+                "pk": 31534774,
+                "uuid": "cd416dd7-4eed-4a86-a7a7-8e7e9985b35e",
+                "form_type": "A_1099_INT",
+                "form_config_pk": 21111,
+                "tables": [],
+                "raw_fields": {
+                    "a_1099_int-General:year": {
+                        "value": "2019",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerName": {
+                        "value": "CAPITAL ONE N.A.",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):15-State": {
+                        "value": "NY",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerAddress:zip": {
+                        "value": "22102",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerAddress:city": {
+                        "value": "MCLEAN ,",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerTelephoneNo.": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:accountNumber": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:recipientName": {
+                        "value": "HARRY POTTER",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):11-BondPremium": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerAddress:state": {
+                        "value": "VA",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerRtn(Optional)": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part3-Boxes(1-8):1-InterestIncome": {
+                        "value": "75.98",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part3-Boxes(1-8):6-ForeignTaxPaid": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerAddress:country": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):10-MarketDiscount": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part3-Boxes(1-8):5-InvestmentExpenses": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part3-Boxes(1-8):8-Tax-ExemptInterest": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):17-StateTaxWithheld": {
+                        "value": "$\n$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:recipientAddress:zip": {
+                        "value": "11219",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerAddress:addressLine1": {
+                        "value": "1680 CAPITAL ONE DR",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerAddress:addressLine2": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:recipientAddress:city": {
+                        "value": "BUFFALO",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:fatcaFilingRequirement": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:recipientAddress:state": {
+                        "value": "NY",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part3-Boxes(1-8):2-EarlyWithdrawalPenalty": {
+                        "value": "0.00",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:recipientAddress:country": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part3-Boxes(1-8):4-FederalIncomeTaxWithheld": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):16-StateIdentificationNo.": {
+                        "value": "72-0210640",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:recipientAddress:addressLine1": {
+                        "value": "38 6TH AVE",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:recipientAddress:addressLine2": {
+                        "value": "#1610",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):13-BondPremiumOnTax-ExemptBond": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part3-Boxes(1-8):7-ForeignCountryOrU.S.Possession": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part1-PayerPii:payerTin(FederalIdentificationNumber)": {
+                        "value": "11-2233445",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part2-RecipientPii:recipientTin(IdentificationNumber)": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):12-BondPremiumOnTreasuryObligations": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):14-Tax-ExemptAndTaxCreditBondCusipNo.": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part4-Boxes(9-17):9-SpecifiedPrivateActivityBondInterest": {
+                        "value": "$",
+                        "is_empty": false,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    },
+                    "a_1099_int-Part3-Boxes(1-8):3-InterestOnU.S.SavingsBondsAndTreasuryObligations": {
+                        "value": "",
+                        "is_empty": true,
+                        "alias_used": null,
+                        "source_filename": "1099INT Example 1.pdf"
+                    }
+                }
+            }
+        ]
+    },
+    "message": "OK"
+}
