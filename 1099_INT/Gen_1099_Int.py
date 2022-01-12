@@ -34,6 +34,7 @@ def ReadJSONData():
                 'a_1099_int-Part4-Boxes(9-17):11-BondPremium',
                 'a_1099_int-Part4-Boxes(9-17):12-BondPremiumOnTreasuryObligations',
                 'a_1099_int-Part4-Boxes(9-17):13-BondPremiumOnTax-ExemptBond',
+                'a_1099_int-Part4-Boxes(9-17):14-Tax-ExemptAndTaxCreditBondCusipNo.',
                 'a_1099_int-Part4-Boxes(9-17):15-State',
                 'a_1099_int-Part4-Boxes(9-17):16-StateIdentificationNo.',
                 'a_1099_int-Part4-Boxes(9-17):17-StateTaxWithheld']
@@ -127,6 +128,15 @@ def WriteJSONData():
         pdf.drawString(x=405, y=568, text=numeric_data_values[6])
         pdf.drawString(x=305, y=530, text=numeric_data_values[7])
         pdf.drawString(x=405, y=530, text=numeric_data_values[8])
+        pdf.drawString(x=305, y=495, text=numeric_data_values[9])
+        pdf.drawString(x=405, y=495, text=numeric_data_values[10]) #
+        pdf.drawString(x=305, y=470, text=numeric_data_values[11])
+        pdf.drawString(x=405, y=470, text=numeric_data_values[12])
+        pdf.drawString(x=305, y=440, text=numeric_data_values[13])
+        pdf.drawString(x=405, y=450, text=numeric_data_values[14])
+        pdf.drawString(x=430, y=450, text=numeric_data_values[15])
+        pdf.drawString(x=510, y=450, text=numeric_data_values[16][0])
+        pdf.drawString(x=510, y=435, text=numeric_data_values[16][2])
 
         pdf.save()
         data.seek(0)
