@@ -47,7 +47,6 @@ def ReadJSONData():
                 'a_1099_int-Part2-RecipientPii:recipientAddress:zip',
                 'a_1099_int-Part1-PayerPii:payerTelephoneNo.',
                 'a_1099_int-Part1-PayerPii:payerTin(FederalIdentificationNumber)',
-                "a_1099_int-Part2-RecipientPii:recipientTin(IdentificationNumber)",
                 'a_1099_int-Part2-RecipientPii:recipientTin(IdentificationNumber)',
                 'a_1099_int-Part2-RecipientPii:recipientName',
                 'a_1099_int-Part2-RecipientPii:recipientAddress:addressLine1',
@@ -97,6 +96,24 @@ def WriteJSONData():
         pdf.drawString(x=105, y=payer_start_y-30, text=payer_and_recipient_data_values[4])
         pdf.drawString(x=120, y=payer_start_y-30, text=payer_and_recipient_data_values[6])
         pdf.drawString(x=55, y=payer_start_y-40, text=payer_and_recipient_data_values[5])
+
+        pdf.drawString(x=55, y=640, text=payer_and_recipient_data_values[8])
+        pdf.drawString(x=175, y=640, text=payer_and_recipient_data_values[9])
+        pdf.drawString(x=55, y=590, text=payer_and_recipient_data_values[10])
+        
+        if payer_and_recipient_data_values[11] == "":
+            pdf.drawString(x=55, y=560, text=payer_and_recipient_data_values[12])
+        elif payer_and_recipient_data_values[12] == "":
+            pdf.drawString(x=55, y=560, text=payer_and_recipient_data_values[11])
+        else:
+            pdf.drawString(x=55, y=560, text=payer_and_recipient_data_values[11])
+            pdf.drawString(x=55, y=550, text=payer_and_recipient_data_values[12])
+
+        pdf.drawString(x=55, y=530, text=payer_and_recipient_data_values[14])
+        pdf.drawString(x=105, y=530, text=payer_and_recipient_data_values[15])
+        pdf.drawString(x=120, y=530, text=payer_and_recipient_data_values[13])
+
+        pdf.drawString(x=55, y=450, text=payer_and_recipient_data_values[17])
 
         pdf.save()
         data.seek(0)
