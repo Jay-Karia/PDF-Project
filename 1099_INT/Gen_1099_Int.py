@@ -115,6 +115,19 @@ def WriteJSONData():
 
         pdf.drawString(x=55, y=450, text=payer_and_recipient_data_values[17])
 
+        # Drawing Right Side Values on PDF
+        pdf.drawString(x=300, y=730, text=payer_and_recipient_data_values[18])
+
+        pdf.drawString(x=305, y=687, text=numeric_data_values[0])
+        pdf.drawString(x=305, y=650, text=numeric_data_values[1])
+        pdf.drawString(x=305, y=615, text=numeric_data_values[2])
+        pdf.drawString(x=305, y=590, text=numeric_data_values[3])
+        pdf.drawString(x=405, y=590, text=numeric_data_values[4])
+        pdf.drawString(x=305, y=568, text=numeric_data_values[5])
+        pdf.drawString(x=405, y=568, text=numeric_data_values[6])
+        pdf.drawString(x=305, y=530, text=numeric_data_values[7])
+        pdf.drawString(x=405, y=530, text=numeric_data_values[8])
+
         pdf.save()
         data.seek(0)
         return data
