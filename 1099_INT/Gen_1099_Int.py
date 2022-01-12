@@ -13,6 +13,11 @@ numeric_data_values = []
 payer_and_recipient_data_values = []
 
 def ReadJSONData():
+    '''
+    This functions will read all the data from the json file.
+    And will store it into a list of respective data list viz: numeric_data_values(for numeric data) and payer_and_recipient_data_values(for payer and recipient data)
+    '''
+
     global numeric_data_values
     global payer_and_recipient_data_values
 
@@ -67,6 +72,10 @@ def ReadJSONData():
                     payer_and_recipient_data_values.append(pv)
 
 def WriteJSONData():
+    '''
+    This function will write/draw each and every data into respective fields in the given Template pdf
+    '''
+
     def run():
         canvas_data = get_overlay_data()
         form = merge(canvas_data, template_path=input_pdf_file)
@@ -77,6 +86,10 @@ def WriteJSONData():
         data = io.BytesIO()
         pdf = Canvas(data)
         pdf.setFontSize(10)
+
+        # removing all the dollar signs in the value
+        for i in range(0, len(numeric_data_values)):
+            numeric_data_values[i] = numeric_data_values[i].replace('$', ' ')
 
         # drawing payer's information into the blank pdf file
         payer_start_y = 720
@@ -119,6 +132,7 @@ def WriteJSONData():
         # Drawing Right Side Values on PDF
         pdf.drawString(x=300, y=730, text=payer_and_recipient_data_values[18])
 
+
         pdf.drawString(x=305, y=687, text=numeric_data_values[0])
         pdf.drawString(x=305, y=650, text=numeric_data_values[1])
         pdf.drawString(x=305, y=615, text=numeric_data_values[2])
@@ -158,7 +172,7 @@ def WriteJSONData():
             f.write(form.read())
 
     run()
-    # os.system(output_pdf_file)
+    os.system(output_pdf_file)
 
 ReadJSONData()
 WriteJSONData()
