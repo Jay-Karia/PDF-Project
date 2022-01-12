@@ -1,7 +1,21 @@
 # Importing required modules
+from reportlab.pdfgen.canvas import Canvas
+import pdfrw
 import json
+import io
+import os
+
+# global variables
+input_pdf_file = "1099INT_Blank.pdf"
+output_pdf_file = "Final_1099INT.pdf"
+
+numeric_data_values = []
+payer_and_recipient_data_values = []
 
 def ReadJSONData():
+    global numeric_data_values
+    global payer_and_recipient_data_values
+
     with open('A_1099_INT.json') as json_file:
         data = json.load(json_file)
         form_type = ''
@@ -25,8 +39,8 @@ def ReadJSONData():
                 'a_1099_int-Part4-Boxes(9-17):17-StateTaxWithheld']
 
                 payer_and_recipient_data_keys = ['a_1099_int-Part1-PayerPii:payerName', 
-                'a_1099_int-Part2-RecipientPii:recipientAddress:addressLine1',
-                'a_1099_int-Part2-RecipientPii:recipientAddress:addressLine2',
+                'a_1099_int-Part1-PayerPii:payerAddress:addressLine1',
+                'a_1099_int-Part1-PayerPii:payerAddress:addressLine2',
                 'a_1099_int-Part1-PayerPii:payerAddress:city',
                 'a_1099_int-Part1-PayerPii:payerAddress:state',
                 'a_1099_int-Part1-PayerPii:payerAddress:country',
@@ -44,10 +58,6 @@ def ReadJSONData():
                 'a_1099_int-Part2-RecipientPii:recipientAddress:country',
                 'a_1099_int-Part2-RecipientPii:accountNumber','a_1099_int-Part1-PayerPii:payerRtn(Optional)']
 
-                numeric_data_values = []
-
-                payer_and_recipient_data_values = []
-
                 for index in range(0, len(numeric_data_keys)):
                     v = numeric_data_keys[index] = item['raw_fields'][numeric_data_keys[index]]['value'] 
                     numeric_data_values.append(v)
@@ -56,7 +66,59 @@ def ReadJSONData():
                     pv = payer_and_recipient_data_keys[index] = item['raw_fields'][payer_and_recipient_data_keys[index]]['value'] 
                     payer_and_recipient_data_values.append(pv)
 
-                print(payer_and_recipient_data_values)
+def WriteJSONData():
+    def run():
+        canvas_data = get_overlay_data()
+        form = merge(canvas_data, template_path=input_pdf_file)
+        save(form, filename=output_pdf_file)
 
+    def get_overlay_data() -> io.BytesIO:
+        global payer_and_recipient_data_values
+        data = io.BytesIO()
+        pdf = Canvas(data)
+        pdf.setFontSize(10)
+
+        # drawing payer's information into the blank pdf file
+        payer_start_y = 720
+
+        pdf.drawString(x=55, y=payer_start_y, text=payer_and_recipient_data_values[0])
+        if payer_and_recipient_data_values[2] == None or payer_and_recipient_data_values[2] == "":
+            payer_and_recipient_data_values[2] = ""
+            pdf.drawString(x=55, y=payer_start_y-10, text=payer_and_recipient_data_values[1])
+            payer_start_y += 10
+        elif payer_and_recipient_data_values[1] == None or payer_and_recipient_data_values[1] == "":
+            payer_and_recipient_data_values[1] = ""
+            pdf.drawString(x=55, y=payer_start_y-10, text=payer_and_recipient_data_values[2])
+            payer_start_y += 10
+        else:
+            pdf.drawString(x=55, y=payer_start_y-10, text=payer_and_recipient_data_values[1])
+            pdf.drawString(x=55, y=payer_start_y-20, text=payer_and_recipient_data_values[2])
+        pdf.drawString(x=55, y=payer_start_y-30, text=payer_and_recipient_data_values[3])
+        pdf.drawString(x=105, y=payer_start_y-30, text=payer_and_recipient_data_values[4])
+        pdf.drawString(x=120, y=payer_start_y-30, text=payer_and_recipient_data_values[6])
+        pdf.drawString(x=55, y=payer_start_y-40, text=payer_and_recipient_data_values[5])
+
+        pdf.save()
+        data.seek(0)
+        return data
+
+    def merge(overlay_canvas: io.BytesIO, template_path: str) -> io.BytesIO:
+        template_pdf = pdfrw.PdfReader(template_path)
+        overlay_pdf = pdfrw.PdfReader(overlay_canvas)
+        for page, data in zip(template_pdf.pages, overlay_pdf.pages):
+            overlay = pdfrw.PageMerge().add(data)[0]
+            pdfrw.PageMerge(page).add(overlay).render()
+        form = io.BytesIO()
+        pdfrw.PdfWriter().write(form, template_pdf)
+        form.seek(0)
+        return form
+
+    def save(form: io.BytesIO, filename: str):
+        with open(filename, 'wb') as f:
+            f.write(form.read())
+
+    run()
+    # os.system(output_pdf_file)
 
 ReadJSONData()
+WriteJSONData()
