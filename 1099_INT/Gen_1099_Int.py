@@ -90,6 +90,11 @@ def WriteJSONData():
         # removing all the dollar signs in the value
         for i in range(0, len(numeric_data_values)):
             numeric_data_values[i] = numeric_data_values[i].replace('$', ' ')
+            if numeric_data_values[i] != "":
+                numeric_data_values[i] = str(numeric_data_values[i])
+                numeric_data_values[i] = "{:,.2f}".format(float(numeric_data_values[i]))
+            else:
+                break
 
         # drawing payer's information into the blank pdf file
         payer_start_y = 720
@@ -172,7 +177,7 @@ def WriteJSONData():
             f.write(form.read())
 
     run()
-    os.system(output_pdf_file)
+    # os.system(output_pdf_file)
 
 ReadJSONData()
 WriteJSONData()
